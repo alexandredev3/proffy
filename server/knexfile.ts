@@ -1,15 +1,15 @@
 import { resolve } from 'path';
-import dotenv from 'dotenv';
+import databaseConfig from './src/config/database'
 
-dotenv.config();
+const { client, host, user, password, database } = databaseConfig;
 
 module.exports = {
-  client: 'pg',
+  client,
   connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host,
+    user,
+    password,
+    database
   },
   migrations: {
     directory: resolve(__dirname, 'src', 'database', 'migrations')
