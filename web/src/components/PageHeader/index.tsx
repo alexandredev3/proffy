@@ -8,9 +8,14 @@ import { PageHeaderContent, TopBarContainer, HeaderContent } from './style';
 
 interface PageHeaderProps {
   title: string;
+  description?: string;
+  // temos que colocar que ela e opcional porque em outro header não tem essa description.
+  marginBottom?: boolean;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ title, children }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({
+  title, description, marginBottom, children 
+}) => {
   return (
   <PageHeaderContent>
       <TopBarContainer>
@@ -20,8 +25,9 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, children }) => {
         <img src={logoImg} alt="Proffy"/>
       </TopBarContainer>
 
-      <HeaderContent>
+      <HeaderContent marginBottom={marginBottom}>
         <strong>{title}</strong>
+        {description && <p>{description}</p>}
         
         {children}
       </HeaderContent>

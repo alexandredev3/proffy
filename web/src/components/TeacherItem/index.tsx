@@ -9,34 +9,58 @@ import {
 
 import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
 
-function TeacherItem() {
-  return (
+import { api } from '../../services/api';
 
+export interface TeacherTypes {
+  id: number;
+  avatar: string;
+  bio: string;
+  cost: number;
+  name: string;
+  subject: string;
+  whatsapp: number;
+}
+
+interface TeacherItemProps {
+  teacher: TeacherTypes;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function handleCreateNewConnection() {
+    api.post('/connections', {
+      user_id: teacher.id
+    });
+  }
+
+  return (
   <Article>
     <TeacherItemContent>
       <Header>
-        <img src="https://avatars2.githubusercontent.com/u/61118233?s=400&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" alt="Alexandre Costa"/>
+        <img src={teacher.avatar} alt="Alexandre Costa"/>
         <div>
-          <strong>Alexandre Costa</strong>
-          <span>Desenvolvimento Back-end e Front-end</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </Header>
 
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        <br /><br />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt maiores dolorum ratione harum eaque ducimus labore repellat accusamus porro facere pariatur quidem dicta, vero iusto ipsam animi officiis totam quis explicabo, maxime perspiciatis quae? Illo dolor dolore deleniti esse est.
+        {teacher.bio}
       </p>
 
       <Footer>
         <p>
           Preço/hora
-          <strong>R$ 34,00</strong>
+          <strong>R$ {teacher.cost}</strong>
         </p>
-        <button>
+        <a 
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleCreateNewConnection} 
+          href={`https://wa.me/${teacher.whatsapp}`}
+        >
           <img src={whatsappIcon} alt="Whatsapp"/>
           Entrar em contado
-        </button>
+        </a>
       </Footer>
 
     </TeacherItemContent>

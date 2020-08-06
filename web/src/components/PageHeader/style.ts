@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface Props {
+  marginBottom?: boolean;
+}
+
 const size = {
   desktop: '700px',
 }
@@ -45,11 +49,15 @@ export const TopBarContainer = styled.div`
   }
 `;
 
-export const HeaderContent = styled.div`
+export const HeaderContent = styled.div<Props>`
   width: 90%;
   margin: 0 auto;
   position: relative;
   margin: 3.2rem auto;
+
+  > p {
+    margin-bottom: ${(props) => props.marginBottom ? '6.4rem' : null};
+  }
 
   > strong {
     font: 700 3.6rem Archivo;
@@ -61,6 +69,14 @@ export const HeaderContent = styled.div`
     }
   }
 
+  > p {
+    max-width: 30rem;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: var(--color-text-in-primary);
+    margin-top: 2.4rem;
+  }
+
   @media ${device.desktop} {
     flex: 1;
     max-width: 740px;
@@ -70,4 +86,4 @@ export const HeaderContent = styled.div`
     justify-content: center;
     align-items: flex-start;
   }
-`;
+`as React.FC<Props>;

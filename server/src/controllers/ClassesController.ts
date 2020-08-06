@@ -35,7 +35,7 @@ class ClassesController {
           .whereRaw('class_schedule.to > ??', [timeInMinutes])
       })
       .where('classes.subject', '=', subject)
-      .join('users', 'classes.user_id', '=', 'user_id')
+      .join('users', 'classes.user_id', '=', 'users.id')
       .select(['classes.*', 'users.*']);
       
 
@@ -92,7 +92,6 @@ class ClassesController {
     } catch(err) {
       await trx.rollback();
       // se ocorrer alguma alteração no banco e cair nesse catch ele vai desfazer todas as operações.
-  
       return response.status(400).json({ 
         error: 'Unexpected error while creating new class.' 
       });
