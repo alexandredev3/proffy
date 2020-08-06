@@ -7,7 +7,7 @@ import {
   LogoContainer, 
   HeroImage, 
   ButtonsContainer,
-  TotalConnections
+  TotalConnections,
 } from './style';
 
 import logoImg from '../../assets/images/logo.svg';
@@ -17,6 +17,8 @@ import studyIcon from '../../assets/images/icons/study.svg';
 import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
 import { api } from '../../services/api';
+
+import Loading from '../../components/Loading'
 
 function Landing() {
   const [totalConnections, setTotalConnections] = useState(0);
@@ -28,6 +30,10 @@ function Landing() {
       setTotalConnections(total);
     })
   }, []);
+
+  if (!totalConnections) {
+    return <Loading />
+  }
 
   return (
     <PageLanding>
