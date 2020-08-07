@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { PageLoading } from './style';
+import { PageLoading, LoaderIcon } from './style';
 
 function Loading() {
   return (
     <PageLoading>
-      <h2>Carregando...</h2>
+      <LoaderIcon />
+      <h2>Conectando, por favor aguarde...</h2>
     </PageLoading>
   )
 }

@@ -47,7 +47,8 @@ function TeacherList() {
 
       <SearchTeachers>
           <Form onSubmit={handleSearchTeachers}>
-            <Select 
+            <Select
+              differentColor
               isWhithoutMarginTop
               name="subject" 
               label="Matéria"
@@ -67,7 +68,8 @@ function TeacherList() {
                 { value: 'Fisica', label: 'Fisica' }
               ]}
             />
-            <Select 
+            <Select
+              differentColor
               isWhithoutMarginTop
               name="week_day" 
               label="Dia da semana"
