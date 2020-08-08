@@ -23,13 +23,14 @@
  <a href="#design">Design</a> • 
  <a href="#features">Funcinalidades</a> • 
  <a href="#tecnologias">Tecnologias</a> •
- <a href="#install">Instalação</a> • 
+ <a href="#install">Instalação</a> •
+ <a href="#author">Autor</a> •
  <a href="#license">Licença</a> • 
- <a href="#autor">Autor</a>
 </p>
 <p align="center" id="description">
   Proffy e uma plataforma de aulas online, com o proffy você tem a opção de ser um estudante ou um professor, a
   plataforma tem sua versão Web e a sua versão Mobile.
+  Este projeto foi feito no Next Level Week#2 by Rocketseat, foi nesse evento com uma semana de duração, que foi construida está aplicação.
 </p>
 <h1 align="center" id="design">
   <img src="./github/interface-web.png" />
@@ -128,7 +129,6 @@ yarn start
 # No seu celular(ou emulador) abre o aplicativo chamado Expo, e escaneie o QR CODE.
 ```
 
-
 <h2 id="license">
   📝 Licença
 </h2>
@@ -136,9 +136,19 @@ yarn start
 Copyright © 2020 [Alexandre Costa](https://github.com/alexandredev3).<br />
 This project is [MIT](./LICENSE.txt) licensed.
 
-<p align="center">
-  <strong> With ❤ </strong> <a target="_blank" href="https://github.com/alexandredev3">Alexandre Costa</a>🚀
-</p>
+
+<h2 id="install">
+   👷️ Autor
+</h2>
+
+<a href="https://github.com/alexandredev3/">
+ <img src="https://avatars3.githubusercontent.com/u/380327?s=460&u=61b426b901b8fe02e12019b1fdb67bf0072d4f00&v=4" width="100px;" alt=""/>
+ <br />
+ <sub><b>Alexandre Costa</b></sub></a>🚀
 
 
- 
+Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!
+
+<a href="https://www.linkedin.com/in/alexandre-costa-401699199">
+  <img alt="Linkedin" src="https://img.shields.io/twitter/<skdnsdjsi>?label=Linkedin&logo=linkedin&style=for-the-badge">
+</a>
