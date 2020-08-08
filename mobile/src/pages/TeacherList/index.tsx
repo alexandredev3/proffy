@@ -1,24 +1,38 @@
 import React, { useState, useCallback } from 'react';
-import { View, ScrollView, Text, TextInput, Alert } from 'react-native';
+import { 
+  View, 
+  ScrollView,
+  Text,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView, 
+  Platform, 
+} from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-community/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { Picker } from '@react-native-community/picker';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { TeachersTypes } from '../../components/TeacherItem';
+import Modal from '../../components/Modal';
 
 import styles from './styles';
+
 import api from '../../services/api';
 
 function TeacherList() {
   const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('')
+
   const [teachers, setTeachers] = useState([]);
   const [favorites, setFavorites] = useState<number[]>([]);
 
   const [subject, setSubject] = useState('');
-  const [week_day, setWeekDay] = useState('');
+  const [week_day, setWeekDay] = useState<number>(0);
   const [time, setTime] = useState('');
 
   // eu so vou executar essa função, quando o usuario dar um submit no filtro.
@@ -49,7 +63,7 @@ function TeacherList() {
   }
 
   function handleFiltersSubmit() {
-    // console.log({
+    //  console.log({
     //   subject,
     //   week_day,
     //   time
@@ -59,9 +73,9 @@ function TeacherList() {
 
     api.get('/classes', {
       params: {
-        subject: subject.trim(),
-        week_day: week_day.trim(),
-        time: time.trim()
+        subject,
+        week_day,
+        time
       }
     }).then((response) => {
       const data = response.data;
@@ -69,17 +83,21 @@ function TeacherList() {
       setTeachers(data);
     
       if (data.length == 0) {
-        return Alert.alert('Aviso', 'Nenhum professor foi encontrado :(')
+        setModalMessage('Nenhum professor foi encontrado!')
+        setIsModalVisible(true);
+        setTimeout(() => {
+          setIsModalVisible(false);
+        }, 2000);
+      } else {
+        setIsFiltersVisible(false);
       }
-
-      setIsFiltersVisible(false);
     }).catch((error) => {
       Alert.alert('Erro Inesperado', 'Ocorreu um erro ao filtrar os proffys, por favor tente novamente...')
     })
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
       <PageHeader 
         title="Proffys disponíveis" 
         headerRight={(
@@ -91,24 +109,48 @@ function TeacherList() {
         {isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matéria</Text>
-            <TextInput 
-              style={styles.input}
-              placeholder="Qual a matéria"
-              placeholderTextColor='#c1bccc'
-              value={subject}
-              onChangeText={text => setSubject(text)}
-            />
+            <View style={styles.select}>
+              <Picker
+                selectedValue={subject}
+                onValueChange={itemValue => setSubject(String(itemValue))}
+              >
+
+                <Picker.Item color="#c1bccc" value="" label="Selecione uma materia" />
+
+                <Picker.Item value="Matemática" label="Matemática" />
+                <Picker.Item value="Português" label="Português" />
+                <Picker.Item value="Inglês" label="Inglês" />
+                <Picker.Item value="Biologia" label="Biologia" />
+                <Picker.Item value="Ciência" label="Ciência" />
+                <Picker.Item value="Geografia" label="Geografia" />
+                <Picker.Item value="Quimica" label="Quimica" />
+                <Picker.Item value="Artes" label="Artes" />
+                <Picker.Item value="Educação física" label="Educação física" />
+                <Picker.Item value="Historia" label="Historia" />
+                <Picker.Item value="Fisica" label="Fisica" />
+              </Picker>
+            </View>
 
             <View style={styles.inputGroup}>
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Dia da semana</Text>
-                <TextInput 
-                  style={styles.input}
-                  placeholder="Qual o dia?"
-                  placeholderTextColor='#c1bccc'
-                  value={week_day}
-                  onChangeText={text => setWeekDay(text)}
-                />
+                <View style={styles.select}>
+                  <Picker
+                    selectedValue={week_day}
+                    onValueChange={itemValue => setWeekDay(Number(itemValue))}
+                  >
+
+                    <Picker.Item color="#c1bccc" value='' label="Dia" />
+
+                    <Picker.Item value={0} label="Domingo" />
+                    <Picker.Item value={1} label="Segunda-feira" />
+                    <Picker.Item value={2} label="Terça-feira" />
+                    <Picker.Item value={3} label="Quarta-feira" />
+                    <Picker.Item value={4} label="Quinta-feira" />
+                    <Picker.Item value={5} label="Sexta-feira" />
+                    <Picker.Item value={6} label="Sábado" />
+                  </Picker>
+                </View>
               </View>
 
               <View style={styles.inputBlock}>
@@ -151,7 +193,11 @@ function TeacherList() {
           }
         )}
       </ScrollView>
-    </View>
+
+      {isModalVisible && (
+        <Modal title={modalMessage} />
+      )}
+    </KeyboardAvoidingView>
   );
 }
 

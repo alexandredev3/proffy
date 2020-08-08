@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import {  } from 'react-native'
 
 import TeacherList from '../pages/TeacherList';
 import Favorites from '../pages/Favorites';
@@ -38,6 +39,8 @@ function StudyTabs() {
           fontSize: 13,
           marginLeft: 16
         },
+
+        keyboardHidesTabBar: true,
 
         // cor do background quando ela não esta selecionada
         inactiveBackgroundColor: '#fafafc',
