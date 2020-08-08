@@ -2,20 +2,20 @@
   <img src="./github/logo.png" />
   <br />
   <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
-    <img alt="Linkedin" src="https://img.shields.io/twitter/url?label=Linkedin&logo=linkedin&style=for-the-badge">
+    <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa-9871F5?label=Linkedin&logo=linkedin&style=flat-square">
   </a>
   <a href="./LICENSE.txt">
-    <img alt="GitHub license" src="https://img.shields.io/github/license/alexandredev3/proffy?logo=mint&style=for-the-badge">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/alexandredev3/proffy?logo=mint&style=flat-square">
   </a>
   <br />
   <a href="https://github.com/alexandredev3/proffy/issues">
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/alexandredev3/proffy?style=for-the-badge">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/alexandredev3/proffy?style=flat-square">
   </a>
   <a href="https://github.com/alexandredev3/proffy/network">
-    <img alt="GitHub forks" src="https://img.shields.io/github/forks/alexandredev3/proffy?style=for-the-badge">
+    <img alt="GitHub forks" src="https://img.shields.io/github/forks/alexandredev3/proffy?style=flat-square">
   </a>
   <a href="https://github.com/alexandredev3/proffy/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/alexandredev3/proffy?style=for-the-badge">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/alexandredev3/proffy?style=flat-square">
   </a>
 </h1>
 <p align="center">
@@ -77,7 +77,7 @@
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Expo](https://expo.io/) instala do no seu celular.
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Expo](https://expo.io/) instala no seu celular ou emulador.
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 ### 🎲 Rodando o Back End (servidor)
@@ -137,18 +137,19 @@ Copyright © 2020 [Alexandre Costa](https://github.com/alexandredev3).<br />
 This project is [MIT](./LICENSE.txt) licensed.
 
 
-<h2 id="install">
+<h2 id="author">
    👷️ Autor
 </h2>
 
 <a href="https://github.com/alexandredev3/">
  <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="100px;" alt=""/>
  <br />
- <sub><b>Alexandre Costa</b></sub></a>🚀
+ <sub><b>Alexandre Costa</b></sub>
+</a>
 
 
-Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!
+Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!🚀
 
 <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
-  <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa%20Dos%20Santos-9871F5?style=flat-square&logo=Linkedin&logoColor=white">
+  <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa-9871F5?label=Linkedin&logo=linkedin&style=flat-square">
 </a>
