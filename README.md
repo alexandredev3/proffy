@@ -142,7 +142,7 @@ This project is [MIT](./LICENSE.txt) licensed.
 </h2>
 
 <a href="https://github.com/alexandredev3/">
- <img src="https://avatars3.githubusercontent.com/u/380327?s=460&u=61b426b901b8fe02e12019b1fdb67bf0072d4f00&v=4" width="100px;" alt=""/>
+ <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="100px;" alt=""/>
  <br />
  <sub><b>Alexandre Costa</b></sub></a>🚀
 
@@ -150,5 +150,5 @@ This project is [MIT](./LICENSE.txt) licensed.
 Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!
 
 <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
-  <img alt="Linkedin" src="https://img.shields.io/twitter/<skdnsdjsi>?label=Linkedin&logo=linkedin&style=for-the-badge">
+  <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa%20Dos%20Santos-9871F5?style=flat-square&logo=Linkedin&logoColor=white">
 </a>
