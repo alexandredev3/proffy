@@ -20,8 +20,8 @@
 </h1>
 <p align="center">
  <a href="#description">Descrição</a> •
- <a href="#roadmap">Roadmap</a> • 
- <a href="#features">Features</a> • 
+ <a href="#design">Design</a> • 
+ <a href="#features">Funcinalidades</a> • 
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#install">Instalação</a> • 
  <a href="#license">Licença</a> • 
@@ -31,7 +31,7 @@
   Proffy e uma plataforma de aulas online, com o proffy você tem a opção de ser um estudante ou um professor, a
   plataforma tem sua versão Web e a sua versão Mobile.
 </p>
-<h1 align="center" id="roadmap">
+<h1 align="center" id="design">
   <img src="./github/interface-web.png" />
   <br />
   <img src="./github/interface-mobile.png" />
@@ -70,8 +70,64 @@
 - [StyledComponents](https://styled-components.com/)
 
 <h2 id="install">
-  📝 Instalação
+   📜️ Instalação
 </h2>
+
+### Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Expo](https://expo.io/) instala do no seu celular.
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+### 🎲 Rodando o Back End (servidor)
+
+```bash
+# Clone este repositório
+$ git clone <git@github.com:alexandredev3/proffy.git>
+
+# Vá para a pasta server
+$ cd server
+
+# Instale as dependências
+$ yarn
+
+# Execute a aplicação em modo de desenvolvimento
+$ yarn start
+
+# O servidor inciará na porta:3333 - acesse <http://localhost:3333>
+```
+
+### 💻️ Rodando o Front End (plataforma web)
+
+```bash
+# Vá para a pasta web
+$ cd web
+
+# Instale as dependências
+$ yarn
+
+# Execute aplicação
+yarn start
+
+# O app vai está rodando na porta 3000 - acesse <http://localhost:3000>
+```
+
+### 📱️ Rodando o Mobile (aplicativo mobile)
+
+```bash
+# Vá para a pasta web
+$ cd mobile
+
+# Instale as dependências
+$ yarn
+
+# Execute aplicação
+yarn start
+
+# Com esse comando ele vai abrir uma aba no seu navegador com um QR CODE.
+# No seu celular(ou emulador) abre o aplicativo chamado Expo, e escaneie o QR CODE.
+```
+
 
 <h2 id="license">
   📝 Licença
