@@ -22,6 +22,7 @@
  <a href="#description">Descrição</a> •
  <a href="#design">Design</a> • 
  <a href="#features">Funcinalidades</a> • 
+ <a href="#database">Banco de dados</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#install">Instalação</a> •
  <a href="#author">Autor</a> •
@@ -56,6 +57,13 @@
 - [x] Entrar em contado com os professores pelo Whatsapp.
 - [x] Opção para você favoritar os professores.
 - [x] Listagem dos professores que você favoritou.
+
+<h2 id="database">
+  🗄 Banco de dados
+</h2>
+Foi utilizado o query builder <a href="http://knexjs.org/">KnexJS</a>
+
+- [PostgreSQL](https://www.postgresql.org/)
 
 <h2 id="tecnologias">
   🛠 Tecnologias
@@ -142,7 +150,7 @@ This project is [MIT](./LICENSE.txt) licensed.
 </h2>
 
 <a href="https://github.com/alexandredev3/">
- <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="100px;" alt=""/>
+ <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="70px;" alt=""/>
  <br />
  <sub><b>Alexandre Costa</b></sub>
 </a>
