@@ -124,7 +124,7 @@ yarn start
 ### 📱️ Rodando o Mobile (aplicativo mobile)
 
 ```bash
-# Vá para a pasta web
+# Vá para a pasta mobile
 $ cd mobile
 
 # Instale as dependências
