@@ -21,7 +21,7 @@
 <p align="center">
  <a href="#description">Descrição</a> •
  <a href="#design">Design</a> • 
- <a href="#features">Funcinalidades</a> • 
+ <a href="#features">Funcionalidades</a> • 
  <a href="#database">Banco de dados</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#install">Instalação</a> •
@@ -161,3 +161,4 @@ Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!🚀
 <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
   <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa-9871F5?label=Linkedin&logo=linkedin&style=flat-square">
 </a>
+ 
