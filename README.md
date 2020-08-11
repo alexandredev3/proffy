@@ -21,7 +21,8 @@
 <p align="center">
  <a href="#description">Descrição</a> •
  <a href="#design">Design</a> • 
- <a href="#features">Funcinalidades</a> • 
+ <a href="#features">Funcionalidades</a> • 
+ <a href="#database">Banco de dados</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#install">Instalação</a> •
  <a href="#author">Autor</a> •
@@ -57,6 +58,13 @@
 - [x] Opção para você favoritar os professores.
 - [x] Listagem dos professores que você favoritou.
 
+<h2 id="database">
+  🗄 Banco de dados
+</h2>
+Foi utilizado o query builder <a href="http://knexjs.org/">KnexJS</a>
+
+- [PostgreSQL](https://www.postgresql.org/)
+
 <h2 id="tecnologias">
   🛠 Tecnologias
 </h2>
@@ -77,7 +85,7 @@
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Expo](https://expo.io/) instala no seu celular ou emulador.
+[Git](https://git-scm.com), [Node.js](https://nodejs.org/en/), [Expo](https://expo.io/) instalado no seu celular ou emulador.
 Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
 
 ### 🎲 Rodando o Back End (servidor)
@@ -116,7 +124,7 @@ yarn start
 ### 📱️ Rodando o Mobile (aplicativo mobile)
 
 ```bash
-# Vá para a pasta web
+# Vá para a pasta mobile
 $ cd mobile
 
 # Instale as dependências
@@ -142,7 +150,7 @@ This project is [MIT](./LICENSE.txt) licensed.
 </h2>
 
 <a href="https://github.com/alexandredev3/">
- <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="100px;" alt=""/>
+ <img src="https://avatars2.githubusercontent.com/u/61118233?s=460&u=6986cc74bed8eb5dee60c2211d9f1b0dd2d24009&v=4" width="70px;" alt=""/>
  <br />
  <sub><b>Alexandre Costa</b></sub>
 </a>
@@ -153,3 +161,4 @@ Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!🚀
 <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
   <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa-9871F5?label=Linkedin&logo=linkedin&style=flat-square">
 </a>
+ 
