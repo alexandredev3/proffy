@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 export default {
   client: process.env.DB_CLIENT,
   host: process.env.DB_HOST,

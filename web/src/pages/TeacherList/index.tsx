@@ -30,9 +30,11 @@ function TeacherList() {
         week_day,
         time
       }
-    })
+    });
 
-    setTeachers(response.data);
+    const data = response.data;
+
+    setTeachers(data);
 
     // console.log({
     //   subject,

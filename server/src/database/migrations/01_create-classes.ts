@@ -5,6 +5,8 @@ export async function up(knex: Knex) {
     table.increments('id').primary();
     table.string('subject').notNullable();
     table.decimal('cost').notNullable();
+    table.string('whatsapp').notNullable();
+    table.string('bio').notNullable();
 
     table.integer('user_id')
       .notNullable()
