@@ -15,5 +15,9 @@
   [x] Rota para criar uma aula;
   - Rota para listar as aulas;
     - Filtrar por matéria, dia da semana e horário;
+  [x] Rota para editar uma aula;
+  [x] Rota para excluir uma aula;
+  [x] Rota para criar um schedule;
+  [x] Rota para editar um schedule;
 
 

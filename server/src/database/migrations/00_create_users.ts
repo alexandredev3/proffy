@@ -5,7 +5,6 @@ export async function up(knex: Knex) {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('surname').notNullable();
-    table.string('avatar')
     table.string('email').unique().notNullable();
     table.string('password_hash').notNullable();
   })

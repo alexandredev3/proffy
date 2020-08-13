@@ -138,6 +138,28 @@ class ClassesController {
       });
     };
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    try {
+      const classeExists = await db('classes')
+        .where('id', '=', id)
+        .first(); 
+
+      if (!classeExists) {
+        return response.status(400).json({ error: 'Class does not exists' });
+      }
+
+      await db('classes')
+        .where('id', '=', id)
+        .delete();
+
+      return response.status(204).send();
+    } catch(err) {
+      return response.status(400).json({ error: 'Unexpected error during class delete.' });
+    }
+  }
 }
 
 export default ClassesController;
