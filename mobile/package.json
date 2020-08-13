@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "resolutions": { "serialize-javascript": "^2.1.1" },
   "dependencies": {
     "@expo-google-fonts/archivo": "^0.1.0",
     "@expo-google-fonts/poppins": "^0.1.0",

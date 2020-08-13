@@ -25,8 +25,8 @@
  <a href="#database">Banco de dados</a> •
  <a href="#tecnologias">Tecnologias</a> •
  <a href="#install">Instalação</a> •
- <a href="#author">Autor</a> •
  <a href="#license">Licença</a> • 
+ <a href="#author">Autor</a> •
 </p>
 <p align="center" id="description">
   Proffy e uma plataforma de aulas online, com o proffy você tem a opção de ser um estudante ou um professor, a
@@ -137,14 +137,6 @@ yarn start
 # No seu celular(ou emulador) abre o aplicativo chamado Expo, e escaneie o QR CODE.
 ```
 
-<h2 id="license">
-  📝 Licença
-</h2>
-
-Copyright © 2020 [Alexandre Costa](https://github.com/alexandredev3).<br />
-This project is [MIT](./LICENSE.txt) licensed.
-
-
 <h2 id="author">
    👷️ Autor
 </h2>
@@ -161,4 +153,10 @@ Feito com ❤️ por Alexandre Costa 👋🏽 Entre em contato!🚀
 <a href="https://www.linkedin.com/in/alexandre-costa-401699199">
   <img alt="Linkedin" src="https://img.shields.io/badge/-Alexandre%20Costa-9871F5?label=Linkedin&logo=linkedin&style=flat-square">
 </a>
- 
+
+<h2 id="license">
+  📝 Licença
+</h2>
+
+Copyright © 2020 [Alexandre Costa](https://github.com/alexandredev3).<br />
+This project is [MIT](./LICENSE.txt) licensed.
