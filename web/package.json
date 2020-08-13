@@ -19,7 +19,6 @@
     "styled-components": "^5.1.1",
     "typescript": "~3.7.2"
   },
-  "resolutions": { "serialize-javascript": "^2.1.1" },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
