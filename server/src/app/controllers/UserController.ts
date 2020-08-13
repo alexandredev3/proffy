@@ -32,10 +32,6 @@ class UserController {
       return response.status(400).json({ error: 'Unexpected error while creating new user.' })
     }
   }
-
-  async update(request: Request, response: Response) {
-    return console.log(request.userId);
-  }
 }
 
 export default UserController;

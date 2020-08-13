@@ -3,11 +3,14 @@ import { Request, Response } from 'express'
 import db from '../../database/connection';
 import convertHourToMinutes from '../../utils/convertHourToMinutes';
 
-interface ScheduleItem {
-  week_day: number;
-  from: string;
-  to: string
-};
+interface ClassItem {
+  id: number;
+  subject: string;
+  cost: string;
+  whatsapp: string;
+  bio: string;
+  user_id: number;
+}
 
 class ClassesController {
   async index(request: Request, response: Response) {
@@ -44,8 +47,6 @@ class ClassesController {
 
   async create(request: Request, response: Response) {
     const {
-      name,
-      avatar,
       whatsapp,
       bio,
       subject,
@@ -56,47 +57,86 @@ class ClassesController {
     const trx = await db.transaction();
   
     try {
-      const insertedUsersIds = await trx('users').insert({
-        name,
-        avatar,
-        whatsapp,
-        bio,
-      }).returning("*");
-      // Vai retorna os ids dos usuarios criados.
-    
-      const user_id = insertedUsersIds[0].id;
-      // estou pegando a posição 0 porque e la que esta o id desse usuario.,
-    
-      const insertedClassesIds = await trx('classes').insert({
-        subject,
-        cost,
-        user_id
-      }).returning("*");
-    
-      const class_id = insertedClassesIds[0].id;
-    
-      const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
-        return {
-          class_id,
-          week_day: scheduleItem.week_day,
-          from: convertHourToMinutes(scheduleItem.from),
-          to: convertHourToMinutes(scheduleItem.to)
-        };
-      });
-    
-      await trx('class_schedule').insert(classSchedule).returning("*");
+      const insertedUserId = await trx('users')
+        .where('id', '=', request.userId)
+        .returning('*');
+
+      if (!insertedUserId[0]) {
+        return response.status(401).json({ error: 'you are not allowed to do this action' });
+      }
+
+      const user_id = insertedUserId[0].id;
+
+      await trx('classes')
+        .insert({
+          whatsapp,
+          bio,
+          subject,
+          cost,
+          user_id
+        })
+        .returning("*");
     
       await trx.commit();
     
       return response.status(201).send();
     } catch(err) {
       await trx.rollback();
+      console.log(err)
       // se ocorrer alguma alteração no banco e cair nesse catch ele vai desfazer todas as operações.
       return response.status(400).json({ 
         error: 'Unexpected error while creating new class.' 
       });
     };
-  
+  }
+
+  async update(request: Request, response: Response) {
+    const {
+      whatsapp,
+      bio,
+      subject,
+      cost
+    } = request.body;
+
+    const { id } = request.params;
+
+    const trx = await db.transaction();
+
+    try {
+      const classes = await trx('classes')
+        .where('id', '=', id)
+        .update({
+          whatsapp,
+          bio,
+          cost,
+          subject,
+        })
+        .returning("*");
+
+      if (!classes[0]) {
+        return response.status(400).json({ error: 'class does not exists' });
+      }
+
+      classes.map((classItem: ClassItem) => {
+        if (classItem.user_id !== request.userId) {
+          return response.status(401).json({ error: 'action not allowed' })
+        }
+      })
+
+      await trx.commit();
+
+      return response.json({
+        classes
+      });
+
+    } catch(err) {
+      await trx.rollback();
+      // se ocorrer alguma alteração no banco e cair nesse catch ele vai desfazer todas as operações.
+      console.log(err)
+      return response.status(400).json({ 
+        error: 'Unexpected error during class update.' 
+      });
+    };
   }
 }
 
