@@ -1,5 +1,6 @@
 import knex from 'knex';
 import dotenv from 'dotenv';
+
 import databaseConfig from '../config/database';
 
 dotenv.config();
@@ -16,4 +17,4 @@ const db = knex({
   },
 });
 
-export default db;
+export { db };

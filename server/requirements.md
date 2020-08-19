@@ -8,7 +8,8 @@
 ## User
   [x] Rota para criar o usuario;
   [x] Rota para o usuario fazer login;
-    - Quando o usuario fazer login, receber um Token de autenticação.
+    - Quando o usuario fazer login, receber um Token de autenticação;
+  [ ] Rota para o usuario poder altera a sua senha ;
 
 ## Aulas
 
@@ -19,5 +20,6 @@
   [x] Rota para excluir uma aula;
   [x] Rota para criar um schedule;
   [x] Rota para editar um schedule;
+  [ ] Listar campos de cada rota, para mostrar no dashboard;
 
 

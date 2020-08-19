@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-import db from '../../database/connection';
+import { db } from '../../database/connection';
 import { passwordCompare } from '../../utils/handlePassword';
 import authConfig from '../../config/auth';
 
@@ -36,8 +36,7 @@ class SessionController {
       });
     } catch(err) {
       console.log(err)
-
-      return response.status(400).json({ error: 'Unexpected error while creating new user.' });
+      return response.status(400).json({ error: 'Unexpected error while login.' });
     }
   }
 }

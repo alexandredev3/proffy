@@ -8,6 +8,7 @@ import UserController from '../app/controllers/UserController';
 import SessionController from '../app/controllers/SessionController';
 import ScheduleController from '../app/controllers/ScheduleController';
 import FileController from '../app/controllers/FileController';
+import ResetPasswordController from '../app/controllers/ResetPasswordController';
 
 import authMiddleware from '../app/middlewares/auth';
 
@@ -20,9 +21,15 @@ const userController = new UserController();
 const sessionController = new SessionController();
 const scheduleController = new ScheduleController();
 const fileController = new FileController();
+const resetPasswordController = new ResetPasswordController();
 
 routes.post('/users', userController.store);
+routes.put('/users', userController.update);
+
 routes.post('/session', sessionController.store);
+
+routes.post('/forgot_password', resetPasswordController.create);
+routes.put('/reset_password/:token', resetPasswordController.update);
 
 routes.use(authMiddleware);
 

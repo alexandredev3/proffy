@@ -1,0 +1,37 @@
+<!-- Body content -->
+<div style="
+  background: #FFF;
+  color: #8257E5;
+  width: 100%; 
+  height: 142px;
+  display: flex;
+  flex-direction: column;"
+>
+  <h1 style="
+    text-align: center;
+    margin: 2rem 0;"
+  >Vamos alterar sua senha ?</h1>
+
+  <p style="line-height: 1.4rem; font-size: 1.2rem;">
+    Olá, {{ user }}! Tudo bem?  
+    <br />
+    Você não está conseguindo lembrar sua senha ?
+    <br />
+    Não se preocupe ! 
+  </p>
+
+  <button style="
+    width: 220px;
+    height: 56px;
+    padding: 19px 40px;
+    align-self: center;
+    border: 0;
+    background-color: #8257E5;
+    border-radius: 8px;
+    cursor: pointer;"
+  >
+    <a href="{{ token }}" style="color: #FFF; font-size: 0.9rem; font-weight: bold;">Definir nova senha</a>
+
+    <p>Teste {{ token }}</p>
+  </button>
+</div> <!-- End Body -->

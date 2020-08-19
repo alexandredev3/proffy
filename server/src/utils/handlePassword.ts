@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
-import db from '../database/connection';
+import { db } from '../database/connection';
 
-function encryptsPassword(password: string) {
-  const password_hash = bcrypt.hash(password, 8);
+function encryptsField(field: string) {
+  const field_hash = bcrypt.hash(field, 8);
 
-  return password_hash;
+  return field_hash;    
 }
 
 async function passwordCompare(password: string) {
@@ -17,4 +17,4 @@ async function passwordCompare(password: string) {
   return password_compare
 }
 
-export {encryptsPassword, passwordCompare};
+export {encryptsField, passwordCompare};
