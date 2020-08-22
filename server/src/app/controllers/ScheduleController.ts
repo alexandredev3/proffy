@@ -5,8 +5,8 @@ import convertHourToMinutes from '../../utils/convertHourToMinutes';
 interface ScheduleItem {
   week_day: number;
   from: string;
-  to: string
-};
+  to: string;
+}
 
 class ScheduleController {
   async create(request: Request, response: Response) {
@@ -39,7 +39,7 @@ class ScheduleController {
       return response.json(scheduleFields);
     } catch(err) {
       await trx.rollback();
-
+      console.log(err)
       return response.status(400).json({ 
         error: 'Unexpected error while creating new Schedule.' 
       });
@@ -77,7 +77,9 @@ class ScheduleController {
       await trx.rollback();
 
       console.log(err);
-      return response.status(400).json({ error: 'Unexpected error while updating an Schedule.' })
+      return response.status(400).json({
+        error: 'Unexpected error while updating an Schedule.' 
+      });
     }
   }
 }

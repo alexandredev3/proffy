@@ -13,7 +13,7 @@ interface ClassItem {
 }
 
 class ClassesController {
-  async index(request: Request, response: Response) {
+  async show(request: Request, response: Response) {
     const filters = request.query;
 
     const subject = filters.subject as string;
@@ -39,8 +39,10 @@ class ClassesController {
       })
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
-      .select(['classes.*', 'users.*']);
-      
+      .select([
+        'classes.*', 
+        'users.id', 'users.name', 'users.avatar_id'
+      ]);
 
     return response.json(classes);
   }
@@ -51,21 +53,21 @@ class ClassesController {
       bio,
       subject,
       cost,
-      schedule
     } = request.body;
   
     const trx = await db.transaction();
   
     try {
-      const insertedUserId = await trx('users')
-        .where('id', '=', request.userId)
-        .returning('*');
+      const alreadyExistClass = await trx('classes')
+        .where('user_id', '=', request.userId)
+        .first();
 
-      if (!insertedUserId[0]) {
-        return response.status(401).json({ error: 'you are not allowed to do this action' });
+        
+      if (alreadyExistClass) {
+        return response.status(400).json({
+          error: 'You already created a class, you can edit your class in the edit profile'
+        })
       }
-
-      const user_id = insertedUserId[0].id;
 
       await trx('classes')
         .insert({
@@ -73,7 +75,7 @@ class ClassesController {
           bio,
           subject,
           cost,
-          user_id
+          user_id: request.userId
         })
         .returning("*");
     
@@ -98,41 +100,21 @@ class ClassesController {
       cost
     } = request.body;
 
-    const { id } = request.params;
-
-    const trx = await db.transaction();
-
     try {
-      const classes = await trx('classes')
-        .where('id', '=', id)
+      const classes = await db('classes')
+        .where('user_id', '=', request.userId)
         .update({
           whatsapp,
           bio,
           cost,
           subject,
         })
-        .returning("*");
+        .returning('*');
 
-      if (!classes[0]) {
-        return response.status(400).json({ error: 'class does not exists' });
-      }
-
-      classes.map((classItem: ClassItem) => {
-        if (classItem.user_id !== request.userId) {
-          return response.status(401).json({ error: 'action not allowed' })
-        }
-      })
-
-      await trx.commit();
-
-      return response.json({
-        classes
-      });
-
+      return response.json(classes);
     } catch(err) {
-      await trx.rollback();
-      // se ocorrer alguma alteração no banco e cair nesse catch ele vai desfazer todas as operações.
       console.log(err)
+
       return response.status(400).json({ 
         error: 'Unexpected error during class update.' 
       });
@@ -140,24 +122,16 @@ class ClassesController {
   }
 
   async delete(request: Request, response: Response) {
-    const { id } = request.params;
-
     try {
-      const classeExists = await db('classes')
-        .where('id', '=', id)
-        .first(); 
-
-      if (!classeExists) {
-        return response.status(400).json({ error: 'Class does not exists' });
-      }
-
       await db('classes')
-        .where('id', '=', id)
+        .where('user_id', '=', request.userId)
         .delete();
 
       return response.status(204).send();
     } catch(err) {
-      return response.status(400).json({ error: 'Unexpected error during class delete.' });
+      return response.status(400).json({ 
+        error: 'Unexpected error during class delete.' 
+      });
     }
   }
 }

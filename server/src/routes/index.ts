@@ -9,6 +9,7 @@ import SessionController from '../app/controllers/SessionController';
 import ScheduleController from '../app/controllers/ScheduleController';
 import FileController from '../app/controllers/FileController';
 import ResetPasswordController from '../app/controllers/ResetPasswordController';
+import DasboardController from '../app/controllers/DasboardController';
 
 import authMiddleware from '../app/middlewares/auth';
 
@@ -22,9 +23,9 @@ const sessionController = new SessionController();
 const scheduleController = new ScheduleController();
 const fileController = new FileController();
 const resetPasswordController = new ResetPasswordController();
+const dasboardController = new DasboardController();
 
 routes.post('/users', userController.store);
-routes.put('/users', userController.update);
 
 routes.post('/session', sessionController.store);
 
@@ -33,15 +34,20 @@ routes.put('/reset_password/:token', resetPasswordController.update);
 
 routes.use(authMiddleware);
 
-routes.get('/classes', classesController.index);
+routes.get('/users', userController.index);
+
+routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);
-routes.put('/classes/:id', classesController.update);
-routes.delete('/classes/:id', classesController.delete);
+routes.put('/classes', classesController.update);
+routes.delete('/classes', classesController.delete);
 
 routes.post('/classes/schedule', scheduleController.create);
 routes.put('/classes/schedule/:id', scheduleController.update);
 
 routes.post('/files', upload.single('image'), fileController.create);
+routes.get('/files/:id', fileController.index);
+
+routes.get('/dashboard', dasboardController.index);
 
 routes.get('/connections', connectionsController.index);
 routes.post('/connections', connectionsController.create);

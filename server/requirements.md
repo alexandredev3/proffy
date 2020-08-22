@@ -6,10 +6,13 @@
   - Rota para criar uma nova conexão.
 
 ## User
+
   [x] Rota para criar o usuario;
   [x] Rota para o usuario fazer login;
     - Quando o usuario fazer login, receber um Token de autenticação;
-  [ ] Rota para o usuario poder altera a sua senha ;
+  [x] Envio de email com um token para o usuario alterar a sua senha;
+  [x] Rota para o usuario poder altera a sua senha, com o token que ele recebeu em seu email;
+  [x] Rota para o usuario fazer upload de sua foto de perfil;
 
 ## Aulas
 
@@ -20,6 +23,9 @@
   [x] Rota para excluir uma aula;
   [x] Rota para criar um schedule;
   [x] Rota para editar um schedule;
-  [ ] Listar campos de cada rota, para mostrar no dashboard;
+
+## Dashboard
+
+  [x] Listar informações nome, whatsapp, agenda, email, etc... do usuario para mostrar no dashboard;
 
 

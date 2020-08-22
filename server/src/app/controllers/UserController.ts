@@ -3,6 +3,21 @@ import { db } from '../../database/connection';
 import { encryptsField } from '../../utils/handlePassword';
 
 class UserController {
+  async index(request: Request, response: Response) {
+    const user = await db('users')
+      .where('id', '=', request.userId)
+      .first();
+
+    const avatar = await db('files')
+      .where('id', '=', user.avatar_id)
+      .first();
+
+    return response.json({
+      name: user.name,
+      image_url: `http://${process.env.IMAGE_URL}/files/${avatar.path}`
+    })
+  }
+
   async store(request: Request, response: Response) {
     const {
       name,
@@ -20,9 +35,10 @@ class UserController {
         return response.status(400).json({ message: 'User already exists!' });
       }
 
+      const nameAndSurname = name + ' ' + surname;
+
       await db('users').insert({
-        name,
-        surname,
+        name: nameAndSurname,
         email,
         password_hash
       });
@@ -31,10 +47,6 @@ class UserController {
     } catch(err) {
       return response.status(400).json({ error: 'Unexpected error while creating new user.' })
     }
-  }
-
-  async update(request: Request, response: Response) {
-    
   }
 }
 
