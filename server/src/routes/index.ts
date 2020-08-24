@@ -10,6 +10,7 @@ import ScheduleController from '../app/controllers/ScheduleController';
 import FileController from '../app/controllers/FileController';
 import ResetPasswordController from '../app/controllers/ResetPasswordController';
 import DasboardController from '../app/controllers/DasboardController';
+import TeachersCountController from '../app/controllers/TeachersCountController';
 
 import authMiddleware from '../app/middlewares/auth';
 
@@ -24,6 +25,7 @@ const scheduleController = new ScheduleController();
 const fileController = new FileController();
 const resetPasswordController = new ResetPasswordController();
 const dasboardController = new DasboardController();
+const teachersCountController = new TeachersCountController();
 
 routes.post('/users', userController.store);
 
@@ -39,15 +41,18 @@ routes.get('/users', userController.index);
 routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);
 routes.put('/classes', classesController.update);
-routes.delete('/classes', classesController.delete);
 
 routes.post('/classes/schedule', scheduleController.create);
 routes.put('/classes/schedule/:id', scheduleController.update);
+routes.delete('/classes/schedule/:id', scheduleController.delete);
 
 routes.post('/files', upload.single('image'), fileController.create);
 routes.get('/files/:id', fileController.index);
 
 routes.get('/dashboard', dasboardController.index);
+routes.delete('/dashboard', dasboardController.delete); // caso o usuario não queira mais ser professor;
+
+routes.get('/teachers', teachersCountController.index);
 
 routes.get('/connections', connectionsController.index);
 routes.post('/connections', connectionsController.create);

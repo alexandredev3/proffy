@@ -3,13 +3,12 @@ import { Request, Response } from 'express'
 import { db } from '../../database/connection';
 import convertHourToMinutes from '../../utils/convertHourToMinutes';
 
-interface ClassItem {
-  id: number;
-  subject: string;
-  cost: string;
-  whatsapp: string;
-  bio: string;
-  user_id: number;
+interface Schedule {
+  id: number,
+  week_day: number;
+  from: number;
+  to: number;
+  class_id: number;
 }
 
 class ClassesController {
@@ -21,9 +20,37 @@ class ClassesController {
     const time = filters.time as string
 
     if (!filters.week_day || !filters.subject || !filters.time) {
-      return response.status(400).json({
-        error: 'Missing filters to search classes'
+      const classes = await db('classes')
+        .join('users', 'classes.user_id', '=', 'users.id')
+        .select([
+          'classes.id', 'classes.subject',  'classes.cost', 'classes.whatsapp', 'classes.whatsapp',
+          'users.name', 'users.avatar_id'
+        ]);
+
+      const id = classes[0].id;
+
+      const classes_schedule = await db('class_schedule')
+        .where('class_id', '=', id)
+        .returning('*')
+  
+      const schedules = classes_schedule.map((schedule: Schedule) => {
+        const { id, week_day, from, to, class_id } = schedule;
+  
+        return {
+          id,
+          week_day,
+          from,
+          to,
+          class_id
+        }
       })
+  
+      return response.json({
+        list: {
+          classes,
+          schedules
+        }
+      });
     }
 
     const timeInMinutes = convertHourToMinutes(time);
@@ -40,11 +67,34 @@ class ClassesController {
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
       .select([
-        'classes.*', 
-        'users.id', 'users.name', 'users.avatar_id'
+        'classes.*',
+        'users.name', 'users.avatar_id'
       ]);
 
-    return response.json(classes);
+    const id = classes[0].id;
+
+    const classes_schedule = await db('class_schedule')
+      .where('class_id', '=', id)
+      .returning('*')
+
+    const schedules = classes_schedule.map((schedule: Schedule) => {
+      const { id, week_day, from, to, class_id } = schedule;
+
+      return {
+        id,
+        week_day,
+        from,
+        to,
+        class_id
+      }
+    })
+
+    return response.json({
+      list: {
+        classes,
+        schedules
+      }
+    });
   }
 
   async create(request: Request, response: Response) {
@@ -119,20 +169,6 @@ class ClassesController {
         error: 'Unexpected error during class update.' 
       });
     };
-  }
-
-  async delete(request: Request, response: Response) {
-    try {
-      await db('classes')
-        .where('user_id', '=', request.userId)
-        .delete();
-
-      return response.status(204).send();
-    } catch(err) {
-      return response.status(400).json({ 
-        error: 'Unexpected error during class delete.' 
-      });
-    }
   }
 }
 

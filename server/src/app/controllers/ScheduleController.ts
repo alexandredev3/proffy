@@ -54,16 +54,23 @@ class ScheduleController {
     const trx = await db.transaction();
 
     try {
-      const insertUserId = await trx('classes')
+      const class_schedule = await trx('class_schedule')
+        .where('id', '=', id)
+        .first();
+
+      const classes = await trx('classes')
         .where('user_id', '=', request.userId)
         .first();
-        
-      const class_id = insertUserId.id
+
+      if (class_schedule.class_id !== classes.id) {
+        return response.status(401).json({
+          error: 'Action not allowed!' 
+        });
+      }
 
       const schedule = await trx('class_schedule')
         .where('id', '=', id)
         .update({
-          class_id,
           week_day, 
           from: convertHourToMinutes(from),
           to: convertHourToMinutes(to)
@@ -80,6 +87,43 @@ class ScheduleController {
       return response.status(400).json({
         error: 'Unexpected error while updating an Schedule.' 
       });
+    }
+  }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    try {
+      const class_schedule = await db('class_schedule')
+        .where('id', '=', id)
+        .first();
+
+      const classes = await db('classes')
+      .where('user_id', '=', request.userId)
+      .first();
+
+      if (!class_schedule) {
+        return response.status(400).json({
+          error: 'Schedule does not exists' 
+        });
+      }
+
+      if (class_schedule.class_id !== classes.id) {
+        return response.status(401).json({
+          error: 'Action not allowed!' 
+        });
+      }
+
+      await db('class_schedule')
+        .where('id', '=', id)
+        .delete();
+
+      return response.status(204).send();
+    } catch(err) {
+      console.log(err)
+      return response.status(400).json({
+        error: 'Unexpected error while delete an Schedule.'
+      })
     }
   }
 }

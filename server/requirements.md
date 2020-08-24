@@ -11,6 +11,7 @@
   [x] Rota para o usuario fazer login;
     - Quando o usuario fazer login, receber um Token de autenticação;
   [x] Envio de email com um token para o usuario alterar a sua senha;
+    - [] Adicionar Background Jobs;
   [x] Rota para o usuario poder altera a sua senha, com o token que ele recebeu em seu email;
   [x] Rota para o usuario fazer upload de sua foto de perfil;
 
@@ -27,5 +28,6 @@
 ## Dashboard
 
   [x] Listar informações nome, whatsapp, agenda, email, etc... do usuario para mostrar no dashboard;
+  [x] Rota de delete, caso o professor __não__ queira dá mais aulas;
 
 
