@@ -1,7 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import BullBoard from 'bull-board';
 import { resolve } from 'path';
+
+import Mail from './lib/Queue';
 
 import { routes } from './routes';
 
@@ -10,6 +13,7 @@ class AppController {
 
   constructor() {
     this.server = express();
+    BullBoard.setQueues(Mail.queues.map(queue => queue.bull));
 
     this.middlwares();
     this.routes()
@@ -23,6 +27,7 @@ class AppController {
       express.static(
         resolve(__dirname, '..', 'temp', 'uploads')
       ));
+    this.server.use('/admin/queues', BullBoard.UI);
   }
 
   routes() {

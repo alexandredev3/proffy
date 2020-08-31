@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { isBefore } from 'date-fns';
 
 import { db } from '../../database/connection';
-import Mail from '../../lib/Mail';
 import { encryptsField } from '../../utils/handlePassword';
+import Mail from '../../lib/Queue';
 
 class ResetPasswordController {
   async create(request: Request, response: Response) {
@@ -37,15 +37,8 @@ class ResetPasswordController {
           user_id: user.id
         });
 
-      await Mail.sendMail({
-        to: `${user.name} - <${user.email}>`,
-        from: 'proffy@proffy.com.br',
-        subject: 'Definir senha',
-        template: 'recovery',
-        context: {
-          user: user.name,
-          token
-        },
+      await Mail.add('RecoveryMail', { 
+        user, token 
       });
 
       return response.status(204).send();
