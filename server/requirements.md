@@ -10,9 +10,9 @@
   - [x] Rota para criar o usuario;
   - [x] Rota para o usuario fazer login;
     - Quando o usuario fazer login, receber um Token de autenticação;
-  - [x] Envio de email com um token para o usuario alterar a sua senha;
-    - [ x ] Adicionar Background Jobs;
   - [x] Rota para o usuario poder altera a sua senha, com o token que ele recebeu em seu email;
+      - Envio de email com um token para o usuario alterar a sua senha;
+        - Adicionar Background Jobs;
   - [x] Rota para o usuario fazer upload de sua foto de perfil;
 
 ## Aulas
