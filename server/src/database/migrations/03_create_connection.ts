@@ -1,4 +1,10 @@
 import Knex from 'knex';
+import dotenv from 'dotenv';
+
+dotenv.config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' 
+});
+
 
 export async function up(knex: Knex) {
   return knex.schema.createTable('connections', table => {
@@ -12,7 +18,7 @@ export async function up(knex: Knex) {
       .onDelete('CASCADE');
 
     table.timestamp('created_at')
-      .defaultTo(knex.raw('now()'))
+      .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
       .notNullable();
   })
 }

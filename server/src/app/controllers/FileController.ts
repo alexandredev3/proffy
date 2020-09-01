@@ -42,15 +42,18 @@ class FileController {
         path
       }).returning("*");
   
-      const avatar_id = file[0].id;
+      const image = file[0];
 
       await trx('users')
         .where('id', '=', request.userId)
-        .update({ avatar_id });
+        .update({ avatar_id: image.id });
 
       await trx.commit();
 
-      return response.json(file);
+      return response.json({
+        id: image.id,
+        avatar_url: `http://${process.env.IMAGE_URL}/files/${image.path}`
+      });
     } catch(err) {
       await trx.rollback();
 

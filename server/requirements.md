@@ -33,3 +33,5 @@
 ## Professores
 
   - [x] Rota para listar, quantos professores existem na plataforma;
+
+- [] adicionar testes na aplicação.

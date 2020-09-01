@@ -1,20 +1,19 @@
 import knex from 'knex';
-import dotenv from 'dotenv';
 
 import databaseConfig from '../config/database';
 
-dotenv.config();
-
-const { client, host, user, password, database } = databaseConfig;
+const { client, host, user, password, database, filename } = databaseConfig;
 
 const db = knex({
   client,
   connection: {
+    filename,
     host,
     user,
     password,
     database
   },
+  useNullAsDefault: false
 });
 
 export { db };

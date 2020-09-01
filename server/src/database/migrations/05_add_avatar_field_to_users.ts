@@ -6,7 +6,6 @@ export async function up(knex: Knex) {
       .references('id')
       .inTable('files')
       .onUpdate('CASCADE')
-      .onDelete('CASCADE');
   })
 }
 

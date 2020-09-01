@@ -71,10 +71,13 @@ class ClassesController {
         'users.name', 'users.avatar_id'
       ]);
 
-    const id = classes[0].id;
+    if (!classes[0]) {
+      return response.status(400).json({ 
+        error: 'Sorry, no classes were found...' 
+      })
+    };
 
     const classes_schedule = await db('class_schedule')
-      .where('class_id', '=', id)
       .returning('*')
 
     const schedules = classes_schedule.map((schedule: Schedule) => {

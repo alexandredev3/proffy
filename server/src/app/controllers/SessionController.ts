@@ -22,13 +22,17 @@ class SessionController {
         return response.status(401).json({ error: 'Password does not match!' })
       }
 
-      const { id, name, avatar } = user[0];
+      const { id, name, avatar_id } = user[0];
 
+      const avatar = await db('files')
+        .where('id', '=', avatar_id)
+        .first();
+        
       return response.json({
         user: {
           id,
           name,
-          avatar
+          avatar_url: avatar == null ? null : `http://${process.env.IMAGE_URL}/files/${avatar.path}`
         },
         token: jwt.sign({ id }, authConfig.secret, {
           expiresIn: authConfig.expiresIn
