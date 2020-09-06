@@ -120,7 +120,7 @@ module.exports = {
   // ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
-  // runner: "jest-runner",
+  // runner: 'jest-runner',
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   // setupFiles: [],
@@ -145,7 +145,7 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    '**/__tests__/**/*.test.ts?(x)',
+    '**/__tests__/**/*.spec.ts?(x)',
     '**/?(*.)+(spec|test).[tj]s?(x)',
   ],
 

@@ -2,7 +2,7 @@ Arguments:
   /usr/bin/node /usr/share/yarn/bin/yarn.js test
 
 PATH: 
-  /home/alexandredev/.zinit/polaris/sbin:/home/alexandredev/.zinit/polaris/bin:/home/alexandredev/.zinit/polaris/usr/sbin:/home/alexandredev/.zinit/polaris/usr/bin:/home/alexandredev/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/alexandredev/Android/Sdk/emulator:/home/alexandredev/Android/Sdk/tools:/home/alexandredev/Android/Sdk/tools/bin:/home/alexandredev/Android/Sdk/platform-tools:/home/alexandredev/android-studio/bin:/home/alexandredev/Android/Sdk/emulator:/home/alexandredev/Android/Sdk/tools:/home/alexandredev/Android/Sdk/tools/bin:/home/alexandredev/Android/Sdk/platform-tools:/home/alexandredev/android-studio/bin
+  /home/alexandredev/.zinit/polaris/sbin:/home/alexandredev/.zinit/polaris/bin:/home/alexandredev/.zinit/polaris/usr/sbin:/home/alexandredev/.zinit/polaris/usr/bin:/home/alexandredev/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/alexandredev/Android/Sdk/emulator:/home/alexandredev/Android/Sdk/tools:/home/alexandredev/Android/Sdk/tools/bin:/home/alexandredev/Android/Sdk/platform-tools:/home/alexandredev/android-studio/bin
 
 Yarn version: 
   1.22.4
@@ -14,12 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/alexandredev/www/proffy/server/package.json: Unexpected token } in JSON at position 587
-      at JSON.parse (<anonymous>)
-      at /usr/share/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/usr/share/yarn/lib/cli.js:310:30)
-      at /usr/share/yarn/lib/cli.js:321:13
+  Error: ENOSPC: no space left on device, mkdir '/tmp/yarn--1599405801811-0.9888062142519392'
 
 npm manifest: 
   {
@@ -31,29 +26,29 @@ npm manifest:
       "start": "tsnd --transpile-only --respawn --ignore-watch node_modules --ignore-watch __tests__ src/server.ts",
       "knex:migrate": "knex --knexfile ./knexfile.ts migrate:latest",
       "knex:migrate:rollback": "knex --knexfile ./knexfile.ts migrate:rollback",
-      "queue": "tsnd --transpile-only --respawn --ignore-watch node_modules __tests__ src/queue.ts",
+      "queue": "tsnd --transpile-only --respawn --ignore-watch node_modules src/queue.ts",
       "pretest": "NODE_ENV=test knex --knexfile ./knexfile.ts migrate:latest",
-      "test": "NODE_ENV=test jest --forceExit",
+      "test": "NODE_ENV=test jest --runInBand --forceExit",
+      "posttest": "NODE_ENV=test knex --knexfile ./knexfile.ts migrate:rollback --all"
     },
     "devDependencies": {
       "@babel/core": "^7.11.4",
       "@babel/preset-env": "^7.11.0",
       "@babel/preset-typescript": "^7.10.4",
       "@types/bcryptjs": "^2.4.2",
-      "@types/bluebird": "^3.5.32",
       "@types/bull": "^3.14.2",
       "@types/bull-board": "^0.6.0",
       "@types/cors": "^2.8.7",
       "@types/express": "^4.17.7",
       "@types/express-handlebars": "^3.1.0",
-      "@types/factory-girl": "^5.0.2",
+      "@types/faker": "^4.1.12",
       "@types/jest": "^26.0.10",
       "@types/jsonwebtoken": "^8.5.0",
       "@types/multer": "^1.4.3",
       "@types/nodemailer": "^6.4.0",
       "@types/supertest": "^2.0.10",
       "babel-jest": "^26.3.0",
-      "factory-girl": "^5.0.4",
+      "faker": "^5.1.0",
       "jest": "^26.4.2",
       "prettier": "^2.0.5",
       "sqlite3": "^5.0.0",
@@ -64,7 +59,6 @@ npm manifest:
     },
     "dependencies": {
       "bcryptjs": "^2.4.3",
-      "bluebird": "^3.7.2",
       "bull": "^3.18.0",
       "bull-board": "^0.9.0",
       "cors": "^2.8.5",
@@ -1215,11 +1209,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/bcryptjs/-/bcryptjs-2.4.2.tgz#e3530eac9dd136bfdfb0e43df2c4c5ce1f77dfae"
     integrity sha512-LiMQ6EOPob/4yUL66SZzu6Yh77cbzJFYll+ZfaPiPPFswtIlA/Fs1MzdKYA7JApHU49zQTbJGX3PDmCpIdDBRQ==
   
-  "@types/bluebird@^3.5.32":
-    version "3.5.32"
-    resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.32.tgz#381e7b59e39f010d20bbf7e044e48f5caf1ab620"
-    integrity sha512-dIOxFfI0C+jz89g6lQ+TqhGgPQ0MxSnh/E4xuC0blhFtyW269+mPG5QeLgbdwst/LvdP8o1y0o/Gz5EHXLec/g==
-  
   "@types/body-parser@*":
     version "1.19.0"
     resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
@@ -1291,10 +1280,10 @@ Lockfile:
       "@types/qs" "*"
       "@types/serve-static" "*"
   
-  "@types/factory-girl@^5.0.2":
-    version "5.0.2"
-    resolved "https://registry.yarnpkg.com/@types/factory-girl/-/factory-girl-5.0.2.tgz#c667e21d367e27c05ad92739e988c982494639fb"
-    integrity sha512-DVhZ3TqvBImKr6dMneJhyv/wJ8V3a5kN6rE7bz3+jpouplG82dFfk2+rgM7tlVMvEk73oa4jH9he+kIAlPeadw==
+  "@types/faker@^4.1.12":
+    version "4.1.12"
+    resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.12.tgz#065d37343677df1aa757c622650bd14666c42602"
+    integrity sha512-0MEyzJrLLs1WaOCx9ULK6FzdCSj2EuxdSP9kvuxxdBEGujZYUOZ4vkPXdgu3dhyg/pOdn7VCatelYX7k0YShlA==
   
   "@types/graceful-fs@^4.1.2":
     version "4.1.3"
@@ -1724,14 +1713,6 @@ Lockfile:
       babel-plugin-jest-hoist "^26.2.0"
       babel-preset-current-node-syntax "^0.1.3"
   
-  babel-runtime@^6.11.6:
-    version "6.26.0"
-    resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
-    integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
-    dependencies:
-      core-js "^2.4.0"
-      regenerator-runtime "^0.11.0"
-  
   balanced-match@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -1773,11 +1754,6 @@ Lockfile:
     integrity sha1-E+v+d4oDIFz+A3UUgeu0szAMEmo=
     dependencies:
       inherits "~2.0.0"
-  
-  bluebird@^3.7.2:
-    version "3.7.2"
-    resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
-    integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
   
   body-parser@1.19.0, body-parser@^1.17.2:
     version "1.19.0"
@@ -2018,11 +1994,6 @@ Lockfile:
       ansi-styles "^4.1.0"
       supports-color "^7.1.0"
   
-  chance@^1.0.4:
-    version "1.1.7"
-    resolved "https://registry.yarnpkg.com/chance/-/chance-1.1.7.tgz#e99dde5ac16681af787b5ba94c8277c090d6cfe8"
-    integrity sha512-bua/2cZEfzS6qPm0vi3JEvGNbriDLcMj9lKxCQOjUcCJRcyjA7umP0zZm6bKWWlBN04vA0L99QGH/CZQawr0eg==
-  
   char-regex@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
@@ -2212,11 +2183,6 @@ Lockfile:
     dependencies:
       browserslist "^4.8.5"
       semver "7.0.0"
-  
-  core-js@^2.4.0:
-    version "2.6.11"
-    resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
-    integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
   
   core-util-is@1.0.2, core-util-is@~1.0.0:
     version "1.0.2"
@@ -2803,13 +2769,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
     integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
   
-  factory-girl@^5.0.4:
-    version "5.0.4"
-    resolved "https://registry.yarnpkg.com/factory-girl/-/factory-girl-5.0.4.tgz#378caabe03aac7b327d47d9e28b4f02ced0c3c0b"
-    integrity sha512-ugGBetzpevbAlKEyMRasBlmCQ76EkvZFMLIsA6K17Pwp/8+7ffBmmxkkw1LoXrOyB6iIgEcmbVF4TcIAnKXyDA==
-    dependencies:
-      babel-runtime "^6.11.6"
-      chance "^1.0.4"
+  faker@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.yarnpkg.com/faker/-/faker-5.1.0.tgz#e10fa1dec4502551aee0eb771617a7e7b94692e8"
+    integrity sha512-RrWKFSSA/aNLP0g3o2WW1Zez7/MnMr7xkiZmoCfAGZmdkDQZ6l2KtuXHN5XjdvpRjDl8+3vf+Rrtl06Z352+Mw==
   
   fast-deep-equal@^3.1.1:
     version "3.1.3"
@@ -5481,11 +5444,6 @@ Lockfile:
     version "1.4.1"
     resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
     integrity sha512-j2+C8+NtXQgEKWk49MMP5P/u2GhnahTtVkRIHr5R5lVRlbKvmQ+oS+A5aLKWp2ma5VkT8sh6v+v4hbH0YHR66A==
-  
-  regenerator-runtime@^0.11.0:
-    version "0.11.1"
-    resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
-    integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
   
   regenerator-runtime@^0.13.4:
     version "0.13.7"

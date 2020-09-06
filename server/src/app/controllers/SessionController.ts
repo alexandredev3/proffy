@@ -10,16 +10,22 @@ class SessionController {
     const { email, password } = request.body;
 
     try {
-      const user = await db('users').where('email', '=', email).returning('*')
+      const user = await db('users')
+        .where('email', '=', email)
+        .returning('*')
 
       if (!user[0]) {
-        return response.status(400).json({ error: 'User does not exists!' });
+        return response.status(400).json({ 
+          error: 'User does not exists!' 
+        });
       }
 
       const check_password = await passwordCompare(password);
 
       if (!check_password) {
-        return response.status(401).json({ error: 'Password does not match!' })
+        return response.status(401).json({ 
+          error: 'Password does not match!' 
+        });
       }
 
       const { id, name, avatar_id } = user[0];
@@ -40,7 +46,9 @@ class SessionController {
       });
     } catch(err) {
       console.log(err)
-      return response.status(400).json({ error: 'Unexpected error while login.' });
+      return response.status(400).json({ 
+        error: 'Unexpected error while login.' 
+      });
     }
   }
 }

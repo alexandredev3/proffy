@@ -21,7 +21,7 @@ class ResetPasswordController {
 
       const token = crypto.randomBytes(20).toString('hex');
 
-      // Tem pode expiração
+      // Tempo de expiração
       const now = new Date();
       now.setHours(now.getHours() + 1);
       // estou setando uma hora para o token expirar.
@@ -55,7 +55,6 @@ class ResetPasswordController {
     const { token } = request.params;
 
     const { 
-      email, 
       password, 
       confirm_password 
     } = request.body;
