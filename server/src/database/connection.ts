@@ -1,19 +1,11 @@
+// import 'dotenv/config';
 import knex from 'knex';
-
 import databaseConfig from '../config/database';
 
-const { client, host, user, password, database, filename } = databaseConfig;
+const config = process.env.NODE_ENV === 'test' 
+  ? databaseConfig.test 
+  : databaseConfig.development;
 
-const db = knex({
-  client,
-  connection: {
-    filename,
-    host,
-    user,
-    password,
-    database
-  },
-  useNullAsDefault: false
-});
+const db = knex(config);
 
 export { db };

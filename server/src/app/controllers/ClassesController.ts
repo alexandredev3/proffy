@@ -11,6 +11,39 @@ interface Schedule {
   class_id: number;
 }
 
+interface ClassItem {
+  id: number;
+  subject: string;
+  cost: string;
+  whatsapp: string;
+  bio: string;
+  user_id: number;
+  name: string;
+  avatar_id: number;
+  path: string;
+  week_day: number;
+  from: number;
+  to: number;
+}
+
+interface Class {
+  id: number;
+  subject: string;
+  cost: string;
+  whatsapp: string;
+  bio: string;
+  user_id: number;
+  name: string;
+  avatar_id: number;
+  path: string;
+}
+
+interface Schedules {
+  week_day: number;
+  from: number;
+  to: number;
+}
+
 class ClassesController {
   async show(request: Request, response: Response) {
     const filters = request.query;
@@ -22,35 +55,53 @@ class ClassesController {
     if (!filters.week_day || !filters.subject || !filters.time) {
       const classes = await db('classes')
         .join('users', 'classes.user_id', '=', 'users.id')
+        .join('files', 'files.id', '=', 'users.avatar_id')
+        .join('class_schedule', 'class_schedule.class_id', '=', 'classes.id')
         .select([
-          'classes.id', 'classes.subject',  'classes.cost', 'classes.whatsapp', 'classes.whatsapp',
-          'users.name', 'users.avatar_id'
+          'classes.*',
+          'users.name', 'users.avatar_id', 'files.path',
+          'class_schedule.*'
         ]);
-
-      const id = classes[0].id;
-
-      const classes_schedule = await db('class_schedule')
-        .where('class_id', '=', id)
-        .returning('*')
   
-      const schedules = classes_schedule.map((schedule: Schedule) => {
-        const { id, week_day, from, to, class_id } = schedule;
-  
-        return {
-          id,
-          week_day,
-          from,
-          to,
-          class_id
-        }
-      })
-  
-      return response.json({
-        list: {
-          classes,
-          schedules
-        }
+        const classList = classes.map((item: ClassItem) => {
+          const { 
+            avatar_id,
+            name,
+            bio,
+            whatsapp,
+            cost,
+            id,
+            subject,
+            user_id,
+            path,
+            week_day,
+            from,
+            to
+          } = item;
+    
+          return {
+            class: {
+              user_id,
+              name,
+              avatar_url: avatar_id == null ? null : `http://${process.env.IMAGE_URL}/files/${path}`,
+              class_id: id,
+              subject,
+              whatsapp,
+              bio,
+              cost,
+            },
+    
+            schedules: {
+              week_day,
+              from,
+              to
+            }
+          }
       });
+
+      console.log(classesList)
+
+      return response.json(classesList);
     }
 
     const timeInMinutes = convertHourToMinutes(time);
@@ -66,9 +117,13 @@ class ClassesController {
       })
       .where('classes.subject', '=', subject)
       .join('users', 'classes.user_id', '=', 'users.id')
+      .join('files', 'files.id', '=', 'users.avatar_id')
+      .join('class_schedule', 'class_schedule.class_id', '=', 'classes.id')
       .select([
         'classes.*',
-        'users.name', 'users.avatar_id'
+        'users.name', 'users.avatar_id',
+        'files.path',
+        'class_schedule.*'
       ]);
 
     if (!classes[0]) {
@@ -77,27 +132,46 @@ class ClassesController {
       })
     };
 
-    const classes_schedule = await db('class_schedule')
-      .returning('*')
+    // const classes_schedule = await db('class_schedule')
+    //   .returning('*')
 
-    const schedules = classes_schedule.map((schedule: Schedule) => {
-      const { id, week_day, from, to, class_id } = schedule;
-
-      return {
+    const classesList = classes.map((item: ClassItem) => {
+      const { 
+        avatar_id,
+        name,
+        bio,
+        whatsapp,
+        cost,
         id,
+        subject,
+        user_id,
+        path,
         week_day,
         from,
-        to,
-        class_id
-      }
-    })
+        to
+      } = item;
 
-    return response.json({
-      list: {
-        classes,
-        schedules
+      return {
+        class: {
+          user_id,
+          name,
+          avatar_url: avatar_id == null ? null : `http://${process.env.IMAGE_URL}/files/${path}`,
+          class_id: id,
+          subject,
+          whatsapp,
+          bio,
+          cost,
+        },
+
+        schedules: {
+          week_day,
+          from,
+          to
+        }
       }
     });
+
+    return response.json(classesList);
   }
 
   async create(request: Request, response: Response) {
@@ -122,7 +196,7 @@ class ClassesController {
         })
       }
 
-      await trx('classes')
+      const [ classCreated ] = await trx('classes')
         .insert({
           whatsapp,
           bio,
@@ -132,9 +206,9 @@ class ClassesController {
         })
         .returning("*");
     
-      await trx.commit();
-    
-      return response.status(201).send();
+      response.json(classCreated);
+
+      return await trx.commit();
     } catch(err) {
       console.log(err)
       await trx.rollback();
@@ -154,7 +228,7 @@ class ClassesController {
     } = request.body;
 
     try {
-      const classes = await db('classes')
+      const [ classUpdated ] = await db('classes')
         .where('user_id', '=', request.userId)
         .update({
           whatsapp,
@@ -164,7 +238,7 @@ class ClassesController {
         })
         .returning('*');
 
-      return response.json(classes);
+      return response.json(classUpdated);
     } catch(err) {
       console.log(err)
 
@@ -172,6 +246,14 @@ class ClassesController {
         error: 'Unexpected error during class update.' 
       });
     };
+  }
+
+  async delete(request: Request, response: Response) {
+    await db('classes')
+      .where('user_id', '=', request.userId)
+      .delete();
+
+    return response.status(204).send();
   }
 }
 

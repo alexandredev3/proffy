@@ -25,13 +25,6 @@ class DasboardController {
       });
     }
   }
-  async delete(request: Request, response: Response) {
-    await db('classes')
-      .where('user_id', '=', request.userId)
-      .delete();
-
-    return response.status(204).send();
-  }
 }
 
 export default DasboardController;

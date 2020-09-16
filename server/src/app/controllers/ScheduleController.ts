@@ -51,6 +51,12 @@ class ScheduleController {
 
     const { id } = request.params;
 
+    if (!id) {
+      return response.status(400).json({
+        error: 'undefined id'
+      });
+    }
+
     const trx = await db.transaction();
 
     try {

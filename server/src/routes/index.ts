@@ -39,6 +39,7 @@ routes.use(authMiddleware);
 routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);
 routes.put('/classes', classesController.update);
+routes.delete('/classes', classesController.delete); // caso o usuario não queira mais ser professor;
 
 routes.post('/classes/schedule', scheduleController.create);
 routes.put('/classes/schedule/:id', scheduleController.update);
@@ -48,7 +49,6 @@ routes.post('/files', upload.single('image'), fileController.create);
 routes.get('/files/:id', fileController.index);
 
 routes.get('/dashboard', dasboardController.index);
-routes.delete('/dashboard', dasboardController.delete); // caso o usuario não queira mais ser professor;
 
 routes.get('/teachers', teachersCountController.index);
 
