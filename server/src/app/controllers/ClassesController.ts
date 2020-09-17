@@ -99,9 +99,7 @@ class ClassesController {
           }
       });
 
-      console.log(classesList)
-
-      return response.json(classesList);
+      return response.json(classList);
     }
 
     const timeInMinutes = convertHourToMinutes(time);
