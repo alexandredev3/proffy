@@ -1,4 +1,4 @@
-// import 'dotenv/config';
+import 'dotenv/config';
 import knex from 'knex';
 import databaseConfig from '../config/database';
 
@@ -8,4 +8,4 @@ const config = process.env.NODE_ENV === 'test'
 
 const db = knex(config);
 
-export { db };
+export { db };  

@@ -1,6 +1,6 @@
 import { db } from '../../database/connection';
 import { Request, Response } from 'express';
-import convertHourToMinutes from '../../utils/convertHourToMinutes';
+import { convertHourToMinutes } from '../../utils/convertHourToMinutes';
 
 interface ScheduleItem {
   week_day: number;
@@ -9,7 +9,7 @@ interface ScheduleItem {
 }
 
 class ScheduleController {
-  async create(request: Request, response: Response) {
+  async create(request: Request, response: Response) {  
     const { schedule } = request.body;
 
     const trx = await db.transaction();

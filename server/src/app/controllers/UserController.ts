@@ -8,7 +8,8 @@ class UserController {
       name,
       surname,
       email,
-      password
+      password,
+      confirmPassword
     } = request.body;
 
     try {
@@ -18,6 +19,12 @@ class UserController {
 
       if (user[0]) {
         return response.status(400).json({ message: 'User already exists!' });
+      }
+
+      if (password !== confirmPassword) {
+        return response.status(400).json({
+          error: 'password does not match'
+        });
       }
 
       const nameAndSurname = name + ' ' + surname;

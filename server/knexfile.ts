@@ -26,16 +26,16 @@ module.exports = {
     },
   },
 
-  // test: {
-  //   client: process.env.DB_CLIENT_TEST,
-  //   connection: {
-  //     host: process.env.DB_HOST_TEST,
-  //     user: process.env.DB_USER_TEST,
-  //     password: process.env.DB_PASSWORD_TEST,
-  //     database: process.env.DB_NAME_TEST
-  //   },
-  //   migrations: {
-  //     directory: resolve(__dirname, 'src', 'database', 'migrations')
-  //   },
-  // }
+  test: {
+    client: process.env.DB_CLIENT_TEST,
+    connection: {
+      host: process.env.DB_HOST_TEST,
+      user: process.env.DB_USER_TEST,
+      password: process.env.DB_PASSWORD_TEST,
+      database: process.env.DB_NAME_TEST
+    },
+    migrations: {
+      directory: resolve(__dirname, 'src', 'database', 'migrations')
+    },
+  }
 }

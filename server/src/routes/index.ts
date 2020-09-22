@@ -39,7 +39,7 @@ routes.use(authMiddleware);
 routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);
 routes.put('/classes', classesController.update);
-routes.delete('/classes', classesController.delete); // caso o usuario não queira mais ser professor;
+routes.delete('/classes/:id', classesController.delete); // caso o usuario não queira mais ser professor;
 
 routes.post('/classes/schedule', scheduleController.create);
 routes.put('/classes/schedule/:id', scheduleController.update);
@@ -52,7 +52,7 @@ routes.get('/dashboard', dasboardController.index);
 
 routes.get('/teachers', teachersCountController.index);
 
-routes.get('/connections', connectionsController.index);
 routes.post('/connections', connectionsController.create);
+routes.get('/connections', connectionsController.index);
 
 export { routes }

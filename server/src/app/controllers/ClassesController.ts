@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import { db } from '../../database/connection';
-import convertHourToMinutes from '../../utils/convertHourToMinutes';
+import { convertHourToMinutes, convertMinutesToHour } from '../../utils/convertHourToMinutes';
 
 interface Schedule {
   id: number,
@@ -46,8 +46,8 @@ interface Schedules {
 
 class ClassesController {
   async show(request: Request, response: Response) {
-    const filters = request.query;
-
+    const filters = request.query;  
+    
     const subject = filters.subject as string;
     const week_day = filters.week_day as string;
     const time = filters.time as string
@@ -62,7 +62,7 @@ class ClassesController {
           'users.name', 'users.avatar_id', 'files.path',
           'class_schedule.*'
         ]);
-  
+
         const classList = classes.map((item: ClassItem) => {
           const { 
             avatar_id,
@@ -93,8 +93,8 @@ class ClassesController {
     
             schedules: {
               week_day,
-              from,
-              to
+              from: convertMinutesToHour(from),
+              to: convertMinutesToHour(to)
             }
           }
       });
@@ -131,7 +131,7 @@ class ClassesController {
     };
 
     // const classes_schedule = await db('class_schedule')
-    //   .returning('*')
+    //   .returning('*');
 
     const classesList = classes.map((item: ClassItem) => {
       const { 
@@ -163,8 +163,8 @@ class ClassesController {
 
         schedules: {
           week_day,
-          from,
-          to
+          from: convertMinutesToHour(from),
+          to: convertMinutesToHour(to)
         }
       }
     });
@@ -187,7 +187,17 @@ class ClassesController {
         .where('user_id', '=', request.userId)
         .first();
 
-        
+      const user = await trx('users')  
+        .where('id', '=', request.userId)
+        .first();
+
+      if (user.avatar_id == null) {
+        return response.status(401).json({
+          error: 'You cannot create a class without an avatar'
+        })
+      }
+
+      
       if (alreadyExistClass) {
         return response.status(400).json({
           error: 'You already created a class, you can edit your class in the edit profile'
