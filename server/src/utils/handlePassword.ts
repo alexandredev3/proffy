@@ -1,20 +1,20 @@
 import bcrypt from 'bcryptjs';
 import { db } from '../database/connection';
 
-function encryptsField(field: string) {
-  const field_hash = bcrypt.hash(field, 8);
+function encryptsPassword(password: string) {
+  const field_hash = bcrypt.hash(password, 8);
 
   return field_hash;    
 }
 
-async function passwordCompare(password: string) {
-  const users = await db('users').returning('*');
-
-  const user = users.find(user => user.password_hash);
+async function passwordCompare(password: string, email: string) {
+  const user = await db('users')
+    .where('email', '=', email)
+    .first();
 
   const password_compare = bcrypt.compare(password, user.password_hash);
 
-  return password_compare
+  return password_compare;
 }
 
-export {encryptsField, passwordCompare};
+export { encryptsPassword, passwordCompare };

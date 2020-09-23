@@ -1,5 +1,5 @@
 import { db } from '../database/connection';
-import { convertHourToMinutes, convertMinutesToHour } from '../utils/convertHourToMinutes';
+import { convertHourToMinutes, convertMinutesToHour } from '../utils/formatDate';
 
 interface Props {
   week_day?: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface ClassItem {
-  class_id: number;
+  id: number;
   subject: string;
   cost: string;
   whatsapp: string;
@@ -18,7 +18,11 @@ interface ClassItem {
   name: string;
   avatar_id: number;
   path: string;
+}
+
+interface ScheduleItem {
   id: number;
+  class_id: number;
   week_day: number;
   from: number;
   to: number;
@@ -59,23 +63,20 @@ async function filterClasses(props: Props) {
 
     const classesList = classes?.map((item: ClassItem) => {
       const { 
+        id,
         avatar_id,
         name,
         bio,
         whatsapp,
         cost,
-        class_id,
         subject,
         user_id,
         path,
-        id,
-        week_day,
-        from,
-        to
       } = item;
 
       return {
         class: {
+          id,
           user_id,
           name,
           avatar_url: avatar_id == null ? null : `http://${process.env.IMAGE_URL}/files/${path}`,
@@ -83,9 +84,21 @@ async function filterClasses(props: Props) {
           whatsapp,
           bio,
           cost,
-        },
+        }
+      }
+    });
 
-        schedules: {
+    const schedulesList = classes?.map((item: ScheduleItem) => {
+      const { 
+        class_id,
+        id,
+        week_day,
+        from,
+        to
+      } = item;
+
+      return {
+        schedule: {
           id,
           class_id,
           week_day,
@@ -95,7 +108,9 @@ async function filterClasses(props: Props) {
       }
     });
 
-  return classesList;
+  const classesSchedules = { classesList, schedulesList }
+
+  return classesSchedules;
 }
 
 export { filterClasses }

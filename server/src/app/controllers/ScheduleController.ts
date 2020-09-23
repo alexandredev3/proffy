@@ -1,14 +1,29 @@
 import { db } from '../../database/connection';
 import { Request, Response } from 'express';
-import { convertHourToMinutes } from '../../utils/convertHourToMinutes';
+import { convertHourToMinutes, convertMinutesToHour } from '../../utils/../utils/formatDate';
 
 interface ScheduleItem {
+  id: number;
+  class_id: number;
   week_day: number;
   from: string;
   to: string;
 }
 
 class ScheduleController {
+  async index(request: Request, response: Response) {
+    const classes = await db('classes')
+      .where('user_id', '=', request.userId)
+      .first();
+
+    const class_id = classes.id;
+
+    const schedules = await db('class_schedule')
+      .where('class_id', '=', class_id)
+
+    return response.json(schedules)
+  }
+
   async create(request: Request, response: Response) {  
     const { schedule } = request.body;
 
@@ -81,7 +96,7 @@ class ScheduleController {
           from: convertHourToMinutes(from),
           to: convertHourToMinutes(to)
         })
-        .returning("*")
+        .returning("*");
 
       await trx.commit();
 

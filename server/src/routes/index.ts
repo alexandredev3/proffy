@@ -9,8 +9,8 @@ import SessionController from '../app/controllers/SessionController';
 import ScheduleController from '../app/controllers/ScheduleController';
 import FileController from '../app/controllers/FileController';
 import ResetPasswordController from '../app/controllers/ResetPasswordController';
-import DasboardController from '../app/controllers/DasboardController';
 import TeachersCountController from '../app/controllers/TeachersCountController';
+import ClassesListController from '../app/controllers/ClasssesListController';
 
 import authMiddleware from '../app/middlewares/auth';
 
@@ -24,8 +24,8 @@ const sessionController = new SessionController();
 const scheduleController = new ScheduleController();
 const fileController = new FileController();
 const resetPasswordController = new ResetPasswordController();
-const dasboardController = new DasboardController();
 const teachersCountController = new TeachersCountController();
+const classesListController = new ClassesListController();
 
 routes.post('/users', userController.store);
 
@@ -36,19 +36,20 @@ routes.put('/reset_password/:token', resetPasswordController.update);
 
 routes.use(authMiddleware);
 
+routes.get('/classes', classesListController.index);
+
 routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);
 routes.put('/classes', classesController.update);
-routes.delete('/classes/:id', classesController.delete); // caso o usuario não queira mais ser professor;
+routes.delete('/classes/:id', classesController.delete);
 
+routes.get('/classes/schedule', scheduleController.index);
 routes.post('/classes/schedule', scheduleController.create);
 routes.put('/classes/schedule/:id', scheduleController.update);
 routes.delete('/classes/schedule/:id', scheduleController.delete);
 
 routes.post('/files', upload.single('image'), fileController.create);
 routes.get('/files/:id', fileController.index);
-
-routes.get('/dashboard', dasboardController.index);
 
 routes.get('/teachers', teachersCountController.index);
 

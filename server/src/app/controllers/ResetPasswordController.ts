@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { isBefore } from 'date-fns';
 
 import { db } from '../../database/connection';
-import { encryptsField } from '../../utils/handlePassword';
+import { encryptsPassword } from '../../utils/handlePassword';
 import Mail from '../../lib/Queue';
 
 class ResetPasswordController {
@@ -56,7 +56,7 @@ class ResetPasswordController {
 
     const { 
       password, 
-      confirm_password 
+      confirmPassword 
     } = request.body;
 
     const trx = await db.transaction();
@@ -66,11 +66,18 @@ class ResetPasswordController {
 
       const reset_password = await trx('reset_password')
         .where('password_reset_token', '=', token)
-        .where('already_been_used', '=', false)
         .first();
 
         if (!reset_password) {
-          return response.status(400).json({ error: 'Token is invalid' })
+          return response.status(400).json({ 
+            error: 'Token is invalid' 
+          });
+        }
+
+        if (reset_password.already_been_used) {
+          return response.status(400).json({
+            error: 'Token is already been used'
+          });
         }
 
         if (isBefore(reset_password.password_reset_token_expires, date)) {
@@ -79,26 +86,16 @@ class ResetPasswordController {
           });
         }
 
-      const user = await trx('users')
-        .where('id', '=', reset_password.user_id)
-        .first();
-
-      if (!user) {
+      if (password !== confirmPassword) {
         return response.status(400).json({ 
-          error: 'User does not exists' 
+          error: 'Password and Confirm Password do not match.' 
         });
       }
 
-      if (password !== confirm_password) {
-        return response.status(400).json({ 
-          error: 'Password and Confirm Password do not match ' 
-        });
-      }
-
-      const password_hash = await encryptsField(password);
+      const password_hash = await encryptsPassword(password);
 
       await trx('users')
-        .where('email', '=', user.email)
+        .where('id', '=', reset_password.user_id)
         .update({
           password_hash
         });

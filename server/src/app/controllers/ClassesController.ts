@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 
 import { db } from '../../database/connection';
-import { convertHourToMinutes, convertMinutesToHour } from '../../utils/convertHourToMinutes';
 import { filterClasses } from '../../utils/filterClasses'
 
 interface ClassItem {

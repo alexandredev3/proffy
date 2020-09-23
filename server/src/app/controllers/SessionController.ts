@@ -16,11 +16,11 @@ class SessionController {
 
       if (!user[0]) {
         return response.status(400).json({ 
-          error: 'User does not exists!' 
+          error: 'User does not exists!'
         });
       }
 
-      const check_password = await passwordCompare(password);
+      const check_password = await passwordCompare(password, email);
 
       if (!check_password) {
         return response.status(401).json({ 
