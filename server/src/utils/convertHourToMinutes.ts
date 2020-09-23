@@ -1,5 +1,3 @@
-import { match } from "date-fns/locale/af";
-
 function convertHourToMinutes(time: string) {
   const [hour, minutes] = time.split(':').map(Number);
 

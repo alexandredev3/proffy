@@ -2,17 +2,10 @@ import { Request, Response } from 'express'
 
 import { db } from '../../database/connection';
 import { convertHourToMinutes, convertMinutesToHour } from '../../utils/convertHourToMinutes';
-
-interface Schedule {
-  id: number,
-  week_day: number;
-  from: number;
-  to: number;
-  class_id: number;
-}
+import { filterClasses } from '../../utils/filterClasses'
 
 interface ClassItem {
-  id: number;
+  class_id: number;
   subject: string;
   cost: string;
   whatsapp: string;
@@ -21,24 +14,7 @@ interface ClassItem {
   name: string;
   avatar_id: number;
   path: string;
-  week_day: number;
-  from: number;
-  to: number;
-}
-
-interface Class {
   id: number;
-  subject: string;
-  cost: string;
-  whatsapp: string;
-  bio: string;
-  user_id: number;
-  name: string;
-  avatar_id: number;
-  path: string;
-}
-
-interface Schedules {
   week_day: number;
   from: number;
   to: number;
@@ -52,124 +28,32 @@ class ClassesController {
     const week_day = filters.week_day as string;
     const time = filters.time as string
 
-    if (!filters.week_day || !filters.subject || !filters.time) {
-      const classes = await db('classes')
-        .join('users', 'classes.user_id', '=', 'users.id')
-        .join('files', 'files.id', '=', 'users.avatar_id')
-        .join('class_schedule', 'class_schedule.class_id', '=', 'classes.id')
-        .select([
-          'classes.*',
-          'users.name', 'users.avatar_id', 'files.path',
-          'class_schedule.*'
-        ]);
+    try {
 
-        const classList = classes.map((item: ClassItem) => {
-          const { 
-            avatar_id,
-            name,
-            bio,
-            whatsapp,
-            cost,
-            id,
-            subject,
-            user_id,
-            path,
-            week_day,
-            from,
-            to
-          } = item;
+      if (!filters.week_day || !filters.subject || !filters.time) {
+        const classes = await filterClasses({ isFindAll: true });
     
-          return {
-            class: {
-              user_id,
-              name,
-              avatar_url: avatar_id == null ? null : `http://${process.env.IMAGE_URL}/files/${path}`,
-              class_id: id,
-              subject,
-              whatsapp,
-              bio,
-              cost,
-            },
-    
-            schedules: {
-              week_day,
-              from: convertMinutesToHour(from),
-              to: convertMinutesToHour(to)
-            }
-          }
-      });
-
-      return response.json(classList);
-    }
-
-    const timeInMinutes = convertHourToMinutes(time);
-
-    const classes = await db('classes')
-      .whereExists(function() {
-        this.select('class_schedule.*')
-          .from('class_schedule')
-          .whereRaw('class_schedule.class_id = classes.id')
-          .whereRaw('class_schedule.week_day = ??', [Number(week_day)])
-          .whereRaw('class_schedule.from <= ??', [timeInMinutes])
-          .whereRaw('class_schedule.to > ??', [timeInMinutes])
-      })
-      .where('classes.subject', '=', subject)
-      .join('users', 'classes.user_id', '=', 'users.id')
-      .join('files', 'files.id', '=', 'users.avatar_id')
-      .join('class_schedule', 'class_schedule.class_id', '=', 'classes.id')
-      .select([
-        'classes.*',
-        'users.name', 'users.avatar_id',
-        'files.path',
-        'class_schedule.*'
-      ]);
-
-    if (!classes[0]) {
-      return response.status(400).json({ 
-        error: 'Sorry, no classes were found...' 
-      })
-    };
-
-    // const classes_schedule = await db('class_schedule')
-    //   .returning('*');
-
-    const classesList = classes.map((item: ClassItem) => {
-      const { 
-        avatar_id,
-        name,
-        bio,
-        whatsapp,
-        cost,
-        id,
-        subject,
-        user_id,
-        path,
-        week_day,
-        from,
-        to
-      } = item;
-
-      return {
-        class: {
-          user_id,
-          name,
-          avatar_url: avatar_id == null ? null : `http://${process.env.IMAGE_URL}/files/${path}`,
-          class_id: id,
-          subject,
-          whatsapp,
-          bio,
-          cost,
-        },
-
-        schedules: {
-          week_day,
-          from: convertMinutesToHour(from),
-          to: convertMinutesToHour(to)
-        }
+        return response.json(classes);
       }
-    });
+      const classes = await filterClasses({ 
+        week_day, time, subject, isFindAll: false 
+      });
+  
+      if (!classes) {
+        return response.status(400).json({ 
+          error: 'Sorry, no classes were found...' 
+        })
+      };
+  
+      return response.json(classes);
 
-    return response.json(classesList);
+    } catch(err) {
+      console.log(err);
+
+      return response.status(400).json({ 
+        error: 'Unexpected error during class list.' 
+      });
+    }
   }
 
   async create(request: Request, response: Response) {

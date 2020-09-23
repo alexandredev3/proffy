@@ -3,6 +3,8 @@ import { resolve } from 'path';
 import crypto from 'crypto';
 import { Request } from 'express';
 
+// create a folder named "uploads" inside the "temp" folder;
+
 export default {
   storage: multer.diskStorage({
     destination: resolve(__dirname, '..', '..', 'temp', 'uploads'),
