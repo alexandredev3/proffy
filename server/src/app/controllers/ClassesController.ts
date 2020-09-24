@@ -3,22 +3,6 @@ import { Request, Response } from 'express'
 import { db } from '../../database/connection';
 import { filterClasses } from '../../utils/filterClasses'
 
-interface ClassItem {
-  class_id: number;
-  subject: string;
-  cost: string;
-  whatsapp: string;
-  bio: string;
-  user_id: number;
-  name: string;
-  avatar_id: number;
-  path: string;
-  id: number;
-  week_day: number;
-  from: number;
-  to: number;
-}
-
 class ClassesController {
   async show(request: Request, response: Response) {
     const filters = request.query;  
@@ -69,17 +53,6 @@ class ClassesController {
       const alreadyExistClass = await trx('classes')
         .where('user_id', '=', request.userId)
         .first();
-
-      const user = await trx('users')  
-        .where('id', '=', request.userId)
-        .first();
-
-      if (user.avatar_id == null) {
-        return response.status(401).json({
-          error: 'You cannot create a class without an avatar'
-        })
-      }
-
       
       if (alreadyExistClass) {
         return response.status(400).json({

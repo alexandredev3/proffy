@@ -1,23 +1,39 @@
 import request from 'supertest';
+import faker from 'faker';
+
+import createUsers from '../utils/createUsers';
 
 import app from '../../src/app';
-import { db } from '../../src/database/connection';
 import { passwordCompare } from '../../src/utils/handlePassword';
 
-let token: string;
+const { name, surname, email, password, confirmPassword } = {
+  name: faker.name.firstName().toString(),
+  surname: faker.name.lastName().toString(),
+  email: faker.internet.email().toString(),
+  password: '12345678',
+  confirmPassword: '12345678'
+};
 
 describe('User', () => {
-  it('should encrypt user password', async () => {
-    const password = '12345678';
+  beforeAll(async () => {
+    await createUsers({ 
+      name,
+      surname,
+      email,
+      password,
+      confirmPassword
+    });
+  });
 
+  it('should encrypt user password', async () => {
     await request(app)
       .post('/session')
       .send({
-        email: 'alexandre@gmail.com',
+        email,
         password
       });
 
-    const password_compare = await passwordCompare(password);
+    const password_compare = await passwordCompare(password, email);
 
     expect(password_compare).toBe(true);
   });
@@ -28,11 +44,11 @@ describe('User', () => {
     await request(app)
       .post('/session')
       .send({
-        email: 'alexandre@gmail.com',
+        email,
         password
       });
 
-    const password_compare = await passwordCompare(password);
+    const password_compare = await passwordCompare(password, email);
 
     expect(password_compare).toBe(false);
   })

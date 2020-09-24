@@ -15,7 +15,8 @@ describe('User and Session', () => {
         name: 'Alexandre',
         surname: 'Costa',
         email: 'alexandre@gmail.com',
-        password: '12345678'
+        password: '12345678',
+        confirmPassword: '12345678'
       });
 
     expect(status).toBe(204);
