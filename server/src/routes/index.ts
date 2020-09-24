@@ -36,7 +36,7 @@ routes.put('/reset_password/:token', resetPasswordController.update);
 
 routes.use(authMiddleware);
 
-routes.get('/classes', classesListController.index);
+routes.get('/class', classesListController.index);
 
 routes.get('/classes', classesController.show);
 routes.post('/classes', classesController.create);

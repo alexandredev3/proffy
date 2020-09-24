@@ -108,9 +108,7 @@ async function filterClasses(props: Props) {
       }
     });
 
-  const classesSchedules = { classesList, schedulesList }
-
-  return classesSchedules;
+  return { classesList, schedulesList };
 }
 
 export { filterClasses }

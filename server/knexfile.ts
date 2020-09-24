@@ -7,11 +7,6 @@ dotenv.config({
     : resolve(__dirname, '.env')
 });
 
-/**
- * if you are going to use the test environment, comment on the development environment.
- * if you are going to use the development environment, comment on the test environment.
-*/
-
 module.exports = {
   development: {
     client: process.env.DB_CLIENT,
