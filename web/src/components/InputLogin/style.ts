@@ -1,9 +1,20 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 interface ContainerProps {
   isFocus: boolean;
   isFilled: boolean;
 }
+
+const moveIn = keyframes`
+  0% {
+    top: 1.9rem;
+  }
+
+  100% {
+    font-size: 1.2rem;
+    top: 10px;
+  }
+`;
 
 export const Container = styled.div<ContainerProps>`
   display: flex;
@@ -12,14 +23,6 @@ export const Container = styled.div<ContainerProps>`
   border: 1px solid var(--color-line-in-white);
   padding: 0 1.8rem;
   background: var(--color-box-footer);
-
-  &:first-child {
-    border-radius: 0.8rem 0.8rem 0 0;
-  }
-
-  &:last-child {
-    border-radius:  0 0.8rem 0.8rem;
-  }
 
   position: relative;
 
@@ -43,14 +46,17 @@ export const Container = styled.div<ContainerProps>`
       span {
         font-size: 1.2rem;
         top: 10px;
+
+        animation: .2s ${moveIn} ease;
+        animation-fill-mode: both;
       }
     `}
 
   ${(props) => props.isFocus &&
     css`
       span {
-        font-size: 1.2rem;
-        top: 10px;
+        animation: .2s ${moveIn} ease;
+        animation-fill-mode: both;
       }
 
       div {

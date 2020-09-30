@@ -9,7 +9,11 @@ import {
   SigninPage,
   Content,
   BackgroundContainer,
-	FormContainer
+  ImageContainer,
+	FormContainer,
+  CheckboxContainer,
+  WrapperCheckbox,
+  WrapperForgotPassword,
 } from './style';
 
 function Signin() {
@@ -18,22 +22,37 @@ function Signin() {
     }
 
 	return (
-		<SigninPage>
+    <SigninPage>
       <BackgroundContainer>
-        <img src={logoImage} alt="logo proffy" />
-        <p>Sua plataforma de <br /> estudos online</p>
+        <ImageContainer>
+          <img src={logoImage} alt="logo proffy" />
+          <p>Sua plataforma de <br /> estudos online</p>
+        </ImageContainer>
       </BackgroundContainer>
 
       <Content>
         <FormContainer>
+          <h1>Fazer login</h1>
+
           <Form onSubmit={handleSubmit}>
-            <h1>Fazer login</h1>
             <InputLogin name="Email" type="text"></InputLogin>
             <InputLogin name="Password" type="password"></InputLogin>
           </Form>
         </FormContainer>
+
+        <CheckboxContainer>
+          <WrapperCheckbox>
+            <input type="checkbox" />
+            <span></span>
+            <p>Lembrar-me</p>
+          </WrapperCheckbox>
+
+          <WrapperForgotPassword>
+            <p>Esqueci minha senha</p>
+          </WrapperForgotPassword>
+        </CheckboxContainer>
       </Content>
-		</SigninPage>
+    </SigninPage>
 	);
 }
 
