@@ -71,6 +71,10 @@ export const FormContainer = styled.div`
         border-radius: 0.8rem 0.8rem 0 0;
       }
     }
+
+    > button {
+      margin-top: 2rem;
+    }
   }
 `;
 
@@ -81,66 +85,14 @@ export const CheckboxContainer = styled.div`
   margin-top: 2.4rem;
   margin-bottom: 2.4rem;
 
-  p {
+  p, a {
     font-size: 1.4rem;
+    text-decoration: none;
     color: var(--color-text-complement);
+    transition: opacity .2s;
+  }
+
+  a:hover {
+    opacity: .8;
   }
 `;
-
-export const WrapperCheckbox = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  input {
-    position: absolute;
-    opacity: 1;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  input:checked ~ span:after {
-    display: block;
-  }
-
-  span {
-    &:after {
-      content: "";
-      position: absolute;
-      display: none;
-    }
-
-    cursor: pointer;
-
-    border-radius: 8px;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 24px;
-    width: 24px;
-    background: var(--color-box-footer);
-  }
-
-  span:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
-`;
-
-export const WrapperForgotPassword = styled.div`
-
-`;
-

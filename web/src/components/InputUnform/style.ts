@@ -12,7 +12,38 @@ const moveIn = keyframes`
 
   100% {
     font-size: 1.2rem;
-    top: 10px;
+    top: 1rem;
+  }
+`;
+
+const moveOut = keyframes`
+  0% {
+    top: 1rem;
+    font-size: 1.2rem;
+  }
+
+  100% {
+    top: 1.9rem;
+  }
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 `;
 
@@ -45,7 +76,7 @@ export const Container = styled.div<ContainerProps>`
     css`
       span {
         font-size: 1.2rem;
-        top: 10px;
+        top: 1rem !important;
 
         animation: .2s ${moveIn} ease;
         animation-fill-mode: both;
@@ -56,13 +87,39 @@ export const Container = styled.div<ContainerProps>`
     css`
       span {
         animation: .2s ${moveIn} ease;
-        animation-fill-mode: both;
+        animation-fill-mode: forwards;
       }
 
       div {
         position: absolute;
         top: 16px;
         left: -2px;
+
+        animation: .2s ${fadeIn} ease;
+        animation-fill-mode: forwards;
+
+        width: 0.2rem;
+        height: 3.5rem;
+        background: var(--color-primary);
+      }
+    `
+  }
+
+  ${(props) => !props.isFocus &&
+    css`
+      span {
+        animation: .2s ${moveOut} ease;
+        animation-fill-mode: backwards;
+      }
+
+      div {
+        position: absolute;
+        top: 16px;
+        left: -2px;
+
+        animation: .2s ${fadeOut} ease;
+        animation-fill-mode: forwards;
+
         width: 0.2rem;
         height: 3.5rem;
         background: var(--color-primary);

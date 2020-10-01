@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
 
-import InputLogin from '../../components/InputLogin';
+import InputUnform from '../../components/InputUnform';
+import Checkbox from '../../components/Checkbox';
+import Button from '../../components/Button';
 
 import logoImage from '../../assets/images/logo.svg';
 
@@ -11,15 +13,23 @@ import {
   BackgroundContainer,
   ImageContainer,
 	FormContainer,
-  CheckboxContainer,
-  WrapperCheckbox,
-  WrapperForgotPassword,
+  CheckboxContainer
 } from './style';
 
+interface CheckboxOptions {
+  id: string;
+  value: string;
+  label: string;
+}
+
 function Signin() {
-    function handleSubmit() {
-        console.log("logado com sucesso")
-    }
+  const handleSubmit = useCallback((data: any) => {
+    console.log(data)
+  }, [])
+
+  const checkboxOptions: CheckboxOptions[] = [
+    { id: "1", value: "true", label: "Lembrar-me" }
+  ]
 
 	return (
     <SigninPage>
@@ -35,22 +45,22 @@ function Signin() {
           <h1>Fazer login</h1>
 
           <Form onSubmit={handleSubmit}>
-            <InputLogin name="Email" type="text"></InputLogin>
-            <InputLogin name="Password" type="password"></InputLogin>
+            <InputUnform name="Email" type="text"></InputUnform>
+            <InputUnform name="Password" type="password"></InputUnform>
+
+            <CheckboxContainer>
+              <Checkbox 
+                name="remember" 
+                options={checkboxOptions} 
+              />
+              <a href="#">Esqueci minha senha</a>
+            </CheckboxContainer>
+
+            <Button>
+              Entrar
+            </Button>
           </Form>
         </FormContainer>
-
-        <CheckboxContainer>
-          <WrapperCheckbox>
-            <input type="checkbox" />
-            <span></span>
-            <p>Lembrar-me</p>
-          </WrapperCheckbox>
-
-          <WrapperForgotPassword>
-            <p>Esqueci minha senha</p>
-          </WrapperForgotPassword>
-        </CheckboxContainer>
       </Content>
     </SigninPage>
 	);

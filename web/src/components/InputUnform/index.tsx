@@ -13,7 +13,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
 }
 
-const InputLogin: React.FC<Props> = ({ name, ...rest }) => {
+const InputUnform: React.FC<Props> = ({ name, ...rest }) => {
   const [isFocus, setIsFocus] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -55,4 +55,4 @@ const InputLogin: React.FC<Props> = ({ name, ...rest }) => {
   );
 }
 
-export default InputLogin;
+export default InputUnform;
