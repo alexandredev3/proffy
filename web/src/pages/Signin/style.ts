@@ -96,3 +96,40 @@ export const CheckboxContainer = styled.div`
     opacity: .8;
   }
 `;
+
+export const Footer = styled.footer`
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  margin-top: 12rem;
+`;
+
+export const RegisterLinkContainer = styled.div`
+  > p {
+    color: var(--color-text-base);
+    font-size: 1.6rem;
+  }
+
+  > a {
+    color: var(--color-primary);
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+`;
+
+export const Title = styled.div`
+
+
+> span {
+    color: var(--color-text-complement);
+    font-size: 1.2rem;
+
+    > img {
+      margin-left: 0.8rem;
+      opacity: 0.6;
+    }
+  }
+`;

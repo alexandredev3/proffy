@@ -9,9 +9,9 @@ export const Container = styled.button`
   font: 700 1.6rem Archivo;
   cursor: pointer;
   background: var(--color-secundary);
-  transition: color 200ms;
+  transition: opacity .2s;
 
   &:hover {
-    color: var(--color-box-base);
+    opacity: .9;
   }
 `;

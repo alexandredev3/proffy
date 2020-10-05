@@ -6,6 +6,7 @@ import Checkbox from '../../components/Checkbox';
 import Button from '../../components/Button';
 
 import logoImage from '../../assets/images/logo.svg';
+import purpleHeart from '../../assets/images/icons/purple-heart.svg';
 
 import { 
   SigninPage,
@@ -13,7 +14,10 @@ import {
   BackgroundContainer,
   ImageContainer,
 	FormContainer,
-  CheckboxContainer
+  CheckboxContainer,
+  Footer,
+  RegisterLinkContainer,
+  Title,
 } from './style';
 
 interface CheckboxOptions {
@@ -51,7 +55,7 @@ function Signin() {
             <CheckboxContainer>
               <Checkbox 
                 name="remember" 
-                options={checkboxOptions} 
+                options={checkboxOptions}
               />
               <a href="#">Esqueci minha senha</a>
             </CheckboxContainer>
@@ -61,6 +65,19 @@ function Signin() {
             </Button>
           </Form>
         </FormContainer>
+
+        <Footer>
+          <RegisterLinkContainer>
+            <p>Não tem conta?</p>
+            <a href="#">Cadastre-se</a>
+          </RegisterLinkContainer>
+
+          <Title>
+            <span>
+              É de graça <img src={purpleHeart} alt="Purple Heart Icon" />
+            </span>
+          </Title>
+        </Footer>
       </Content>
     </SigninPage>
 	);
