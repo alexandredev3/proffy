@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
+import { Link } from 'react-router-dom';
 
 import InputUnform from '../../components/InputUnform';
 import Checkbox from '../../components/Checkbox';
@@ -69,7 +70,7 @@ function Signin() {
         <Footer>
           <RegisterLinkContainer>
             <p>Não tem conta?</p>
-            <a href="#">Cadastre-se</a>
+            <Link to="/signup">Cadastre-se</Link>
           </RegisterLinkContainer>
 
           <Title>
