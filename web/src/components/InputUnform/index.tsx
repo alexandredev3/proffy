@@ -42,7 +42,7 @@ const InputUnform: React.FC<Props> = ({ name, ...rest }) => {
       isFilled={isFilled} isFocus={isFocus}
     >
         
-      <span>{name}</span>
+      <span>{rest.placeholder}</span>
       <div></div>
       <input 
         onFocus={handleInputFocus}

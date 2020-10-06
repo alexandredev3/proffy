@@ -4,7 +4,7 @@ import { Container } from './style';
 
 const Button: React.FC = ({ children }) => {
   return (
-    <Container type="button">
+    <Container type="submit">
       { children }
     </Container>
   );

@@ -70,6 +70,13 @@ export const Container = styled.div<ContainerProps>`
     background: transparent;
     border: 0;
     font-size: 1.4rem;
+
+    /**Não vamos usar o placeholder dentro do input */
+    &::placeholder {
+      visibility: hidden;
+      display: none;
+      opacity: 0;
+    }
   }
 
   ${(props) => props.isFilled &&

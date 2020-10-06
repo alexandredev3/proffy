@@ -50,8 +50,8 @@ function Signin() {
           <h1>Fazer login</h1>
 
           <Form onSubmit={handleSubmit}>
-            <InputUnform name="Email" type="text"></InputUnform>
-            <InputUnform name="Password" type="password"></InputUnform>
+            <InputUnform name="Email" type="text" placeholder="E-mail"></InputUnform>
+            <InputUnform name="Password" type="password" placeholder="Senha"></InputUnform>
 
             <CheckboxContainer>
               <Checkbox 

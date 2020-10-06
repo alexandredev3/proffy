@@ -1,14 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Form } from '@unform/web';
-import { Link } from 'react-router-dom';
+import { FormHandles } from '@unform/core';
+import { Link, useHistory } from 'react-router-dom';
+
+import { api } from '../../services/api';
 
 import InputUnform from '../../components/InputUnform';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal';
 
 import logoImage from '../../assets/images/logo.svg';
 import backIcon from '../../assets/images/icons/back.svg';
 
-import { 
+import {
   SignupPage,
   Content,
   Header,
@@ -17,15 +21,58 @@ import {
   ImageContainer
 } from './style';
 
+interface SignUpFormData {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export default function Signup() {
-  const handleSubmit = useCallback((
-    data: any
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const inputRef = useRef<FormHandles>(null);
+
+  const handleSubmit = useCallback(async (
+    data: SignUpFormData
   ) => {
-    console.log(data);
-  }, [])
+
+    try {
+      const { 
+        name,
+        surname,
+        email,
+        password,
+        confirmPassword
+      } = data;
+
+      await api.post('/users', {
+        name,
+        surname,
+        email,
+        password,
+        confirmPassword
+      });
+
+      setIsModalVisible(true)
+    } catch(err) {
+      alert(`Ocorreu um erro durante a criação de um usuario, tente novamente...`);
+      console.log(err)
+    }
+
+  }, [inputRef]);
 
   return (
     <SignupPage>
+      <Modal
+        isVisible={isModalVisible}
+        title="Cadastro concluído"
+        describe="Agora você faz parte da plataforma da Proffy.
+        Tenha uma ótima experiência."
+        buttonText="Fazer login"
+        redirectButton="/"
+      />
+
       <Content>
         <Header>
           <Link to="/">
@@ -39,30 +86,35 @@ export default function Signup() {
             Preencha os dados abaixo para começar.
           </p>
 
-          <Form onSubmit={handleSubmit}>
+          <Form ref={inputRef} onSubmit={handleSubmit}>
             <InputUnform
-              name="Nome"
+              name="name"
               type="text"
+              placeholder="Nome"
             />
 
             <InputUnform
-              name="Sobrenome"
+              name="surname"
               type="text"
+              placeholder="Sobrenome"
             />
 
             <InputUnform
-              name="Email"
+              name="email"
               type="text"
+              placeholder="E-mail"
             />
 
             <InputUnform
-              name="Senha"
+              name="password"
               type="password"
+              placeholder="Senha"
             />
 
             <InputUnform
-              name="Confirmar senha"
+              name="confirmPassword"
               type="password"
+              placeholder="Confirmar senha"
             />
 
             <Button>
