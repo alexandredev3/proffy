@@ -1,22 +1,49 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { 
+  Route as RouteDOM,
+  RouteProps as RouteDOMProps,
+  Redirect
+} from 'react-router-dom';
 
-import Signup from '../pages/Signup';
-import Signin from '../pages/Signin';
-import Landing from '../pages/Landing';
-import TeacherList from '../pages/TeacherList';
-import TeacherForm from '../pages/TeacherForm';
+import { useAuth } from '../hooks/auth';
 
-function Routes() {
+interface RouteProps extends RouteDOMProps {
+  isPrivate?: boolean;
+  component: React.ComponentType;
+}
+
+/* 
+  * component: Component: Estou trocando o nome "component" para Component Para rendelizar
+*/
+const Route: React.FC<RouteProps> = ({ 
+  isPrivate = false,
+  component: Component,
+  ...rest
+}) => {
+  const { signed } = useAuth();
+
   return (
-    <BrowserRouter>
-      <Route path="/" exact component={Signin} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/home" component={Landing} />
-      <Route path="/study" component={TeacherList} />
-      <Route path="/give-classes" component={TeacherForm} />
-    </BrowserRouter>
+    <RouteDOM 
+      { ...rest }
+      render={({ location }) => {
+        return isPrivate === signed ? (
+          <Component />
+          /**
+           * <Component /> quer dizer que ele vai rendelizar os componentes.
+           */
+        ) : (
+          <Redirect 
+            to={{
+              pathname: isPrivate ? "/" : "home",
+              state: {
+                from: location
+              } 
+            }}
+          />
+        )
+      }}
+    />
   );
 }
 
-export { Routes };
+export { Route };

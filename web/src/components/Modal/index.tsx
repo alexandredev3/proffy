@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import successCheckIcon from '../../assets/images/icons/success-check-icon.svg'
 
@@ -9,18 +9,18 @@ interface Props {
   isVisible: boolean;
   title: string;
   describe: string;
-  buttonText: string;
-  redirectButton: string;
+  titleButton: string;
+  redirectPath: string;
 }
 
 const Modal: React.FC<Props> = ({ 
-  isVisible, title, describe, buttonText, redirectButton 
+  isVisible, title, describe, titleButton, redirectPath 
 }) => {
   const { push } = useHistory();
 
-  const handleRedirect = useCallback(() => {
-    push(redirectButton);
-  }, [])
+  function handleRedirect() {
+    push(redirectPath);
+  }
 
   return (
     <Container isVisible={isVisible}>
@@ -31,7 +31,7 @@ const Modal: React.FC<Props> = ({
         <p>{describe}</p>
 
         <Button onClick={handleRedirect}>
-          {buttonText}
+          {titleButton}
         </Button>
       </Content>
     </Container>

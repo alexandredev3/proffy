@@ -2,6 +2,8 @@ import React, { useCallback } from 'react';
 import { Form } from '@unform/web';
 import { Link } from 'react-router-dom';
 
+import { useAuth } from '../../hooks/auth';
+
 import InputUnform from '../../components/InputUnform';
 import Checkbox from '../../components/Checkbox';
 import Button from '../../components/Button';
@@ -27,9 +29,26 @@ interface CheckboxOptions {
   label: string;
 }
 
+interface SigninData {
+  email: string;
+  password: string;
+}
+
 function Signin() {
-  const handleSubmit = useCallback((data: any) => {
-    console.log(data)
+  const { signIn } = useAuth();
+
+  const handleSubmit = useCallback(async (data: SigninData) => {
+    const { email, password } = data;
+
+    try {
+      await signIn({
+        email,
+        password
+      })
+    } catch(err) {
+      alert("Deu algo errado... porfavor tente novamente");
+      console.log(err)
+    }
   }, [])
 
   const checkboxOptions: CheckboxOptions[] = [
@@ -50,8 +69,16 @@ function Signin() {
           <h1>Fazer login</h1>
 
           <Form onSubmit={handleSubmit}>
-            <InputUnform name="Email" type="text" placeholder="E-mail"></InputUnform>
-            <InputUnform name="Password" type="password" placeholder="Senha"></InputUnform>
+            <InputUnform 
+              name="email" 
+              type="text" 
+              placeholder="E-mail" 
+            />
+            <InputUnform 
+              name="password"
+              type="password"
+              placeholder="Senha" 
+            />
 
             <CheckboxContainer>
               <Checkbox 

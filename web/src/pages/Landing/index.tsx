@@ -16,24 +16,25 @@ import landingImg from '../../assets/images/landing.svg';
 import studyIcon from '../../assets/images/icons/study.svg';
 import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
 import purpleHeartIcon from '../../assets/images/icons/purple-heart.svg';
+
 import { api } from '../../services/api';
 
-import Loading from '../../components/Loading'
+import { useAuth } from '../../hooks/auth';
 
 function Landing() {
   const [totalConnections, setTotalConnections] = useState(0);
 
-  useEffect(() => {
-    api.get('/connections').then(response => {
-      const { total } = response.data;
+  const { userData } = useAuth();
 
-      setTotalConnections(total);
-    })
-  }, []);
+  console.log(userData)
 
-  if (!totalConnections) {
-    return <Loading />
-  }
+  // useEffect(() => {
+  //   api.get('/connections').then(response => {
+  //     const { total } = response.data;
+
+  //     setTotalConnections(total);
+  //   })
+  // }, []);
 
   return (
     <PageLanding>

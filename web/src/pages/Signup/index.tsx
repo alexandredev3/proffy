@@ -69,8 +69,8 @@ export default function Signup() {
         title="Cadastro concluído"
         describe="Agora você faz parte da plataforma da Proffy.
         Tenha uma ótima experiência."
-        buttonText="Fazer login"
-        redirectButton="/"
+        titleButton="Fazer login"
+        redirectPath="/"
       />
 
       <Content>
