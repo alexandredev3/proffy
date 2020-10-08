@@ -13,7 +13,7 @@ interface RouteProps extends RouteDOMProps {
 }
 
 /* 
-  * component: Component: Estou trocando o nome "component" para Component Para rendelizar
+  * component: Component: Estou trocando o nome "component" para "Component" para rendelizar
 */
 const Route: React.FC<RouteProps> = ({ 
   isPrivate = false,
@@ -29,15 +29,22 @@ const Route: React.FC<RouteProps> = ({
         return isPrivate === signed ? (
           <Component />
           /**
-           * <Component /> quer dizer que ele vai rendelizar os componentes.
+           * Vai rendelizar os componentes que a rota tiver a propriedade isPrivate.
            */
         ) : (
-          <Redirect 
+          <Redirect
+            // Aqui e onde vai fazer os redirecionamentos.
+            /**
+             * Se o usuario NÃO estiver logado, e tentar acessar alguma rota que e privata,
+             * o usuario vai ser redirecionato para diretorio "/".
+             * 
+             * Se o usuario fazer login, ele vai ser redirecionato para o diretorio "/home".
+             */
             to={{
-              pathname: isPrivate ? "/" : "home",
+              pathname: isPrivate ? "/" : "/home",
               state: {
                 from: location
-              } 
+              }
             }}
           />
         )

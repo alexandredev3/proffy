@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { FormEvent, useCallback } from 'react';
 import { Form } from '@unform/web';
 import { Link } from 'react-router-dom';
 
@@ -32,19 +32,22 @@ interface CheckboxOptions {
 interface SigninData {
   email: string;
   password: string;
+  remember: string[];
 }
 
 function Signin() {
   const { signIn } = useAuth();
 
   const handleSubmit = useCallback(async (data: SigninData) => {
-    const { email, password } = data;
+    const { email, password, remember } = data;
 
     try {
       await signIn({
         email,
-        password
+        password,
+        isLoginRemember: remember[0] ? true : false 
       })
+
     } catch(err) {
       alert("Deu algo errado... porfavor tente novamente");
       console.log(err)
@@ -52,7 +55,7 @@ function Signin() {
   }, [])
 
   const checkboxOptions: CheckboxOptions[] = [
-    { id: "1", value: "true", label: "Lembrar-me" }
+    { id: "1", value: "remember", label: "Lembrar-me" }
   ]
 
 	return (
