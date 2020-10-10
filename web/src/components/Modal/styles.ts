@@ -2,13 +2,7 @@ import styled from 'styled-components';
 
 import successBackgroundImg from '../../assets/images/success-background.svg'
 
-interface Props {
-  isVisible: boolean;
-}
-
-export const Container = styled.div<Props>`
-  display: ${(props) => props.isVisible ? "initial" : "none"};
-
+export const Container = styled.div`
   position: absolute;
   z-index: 9999;
   top: 0;

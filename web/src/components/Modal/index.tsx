@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { 
+  forwardRef, 
+  useCallback,
+  useState,
+  useImperativeHandle 
+} from 'react';
 
 import successCheckIcon from '../../assets/images/icons/success-check-icon.svg'
 
 import { Container, Content, Button } from './styles';
 import { useHistory } from 'react-router-dom';
 
-interface Props {
-  isVisible: boolean;
+interface ModalProps {
   title: string;
   describe: string;
   titleButton: string;
   redirectPath: string;
 }
 
-const Modal: React.FC<Props> = ({ 
-  isVisible, title, describe, titleButton, redirectPath 
-}) => {
+export interface ModalHandles {
+  openModal: () => void;
+}
+
+const Modal: React.RefForwardingComponent<ModalHandles, ModalProps> = ({ 
+  title, describe, titleButton, redirectPath 
+}, ref) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const openModal = useCallback(() => {
+    setIsVisible(true);
+  }, [isVisible]);
+
+  useImperativeHandle(ref, () => {
+    return {
+      openModal
+    };
+  })
+
   const { push } = useHistory();
 
-  function handleRedirect() {
+  const handleRedirect = useCallback(() => {
     push(redirectPath);
+
+    setIsVisible(false)
+  }, [push, isVisible]);
+
+  if (!isVisible) {
+    return null;
   }
 
   return (
-    <Container isVisible={isVisible}>
+    <Container>
       <Content>
         <img src={successCheckIcon} alt="check icon"/>
 
@@ -38,4 +64,4 @@ const Modal: React.FC<Props> = ({
   );
 };
 
-export default Modal;
+export default forwardRef(Modal);

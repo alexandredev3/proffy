@@ -18,7 +18,7 @@ const InputUnform: React.FC<Props> = ({ name, ...rest }) => {
   const [isFilled, setIsFilled] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const { fieldName, defaultValue, registerField, error } = useField(name);
+  const { fieldName, defaultValue, registerField, error, } = useField(name);
 
   const handleInputFocus = useCallback(() => {
     setIsFocus(true)

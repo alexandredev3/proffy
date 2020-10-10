@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const device = {
   desktop: '700px'
@@ -8,6 +8,9 @@ const size = {
   desktop: `(min-width: ${device.desktop})`
 };
 
+interface Props {
+  bioCount?: number;
+}
 
 export const PageTeacherForm = styled.div`
   width: 100vw;
@@ -32,7 +35,7 @@ export const Form = styled.form`
 
 `;
 
-export const Fieldset = styled.fieldset`
+export const Fieldset = styled.fieldset<Props>`
   border: 0;
   padding: 0 2.4rem;
 
@@ -70,6 +73,15 @@ export const Fieldset = styled.fieldset`
   @media ${size.desktop} {
     padding: 0 6.4rem;
   }
+
+  > span {
+      font-size: 1.2rem;
+      display: inherit;
+      text-align: right;
+
+      color: ${(props) => props.bioCount && props.bioCount >= 200 && 'orange'};
+      color: ${(props) => props.bioCount && props.bioCount >= 250 && '#ff483b'};
+    }
 `;
 
 export const ScheduleItem = styled.div`
@@ -135,3 +147,24 @@ export const Footer = styled.footer`
   }
 `;
 
+export const InputGroup = styled.div`
+  display: flex;
+  align-items: center;
+
+  > img {
+    width: 84px;
+    height: 84px;
+
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  > h3 {
+    width: 40%;
+    font-family: 'Archivo';
+    font-size: 2rem;
+    color: var(--color-text-title);
+    margin-left: 2rem;
+    margin-right: 4rem;
+  }
+`;

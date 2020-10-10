@@ -4,10 +4,6 @@ export const PageLanding = styled.div`
   width: 100vw;
   height: 100vh;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   color: var(--color-text-in-primary);
   background: var(--color-primary);
 `;
@@ -17,12 +13,10 @@ export const LogoContainer = styled.div`
   margin-bottom: 3.2rem;
 
   @media(min-width: 1100px) {
-    grid-area: logo;
     /*
       Esse elemento vai ocupar o logo la do grid-template-areas
     */
     align-self: center;
-    margin: 0;
     text-align: left;
 
     > h2 {
@@ -47,6 +41,63 @@ export const LogoContainer = styled.div`
   }
 `;
 
+export const Header = styled.header`
+  display: flex;
+  justify-content: space-between;
+
+  margin: 2.4rem 14rem;
+`;
+
+export const UserContainer = styled.div`
+  display: flex;
+  align-items: center;
+
+  > img {
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+  }
+
+  > span {
+    font-size: 1.4rem;
+    font-family: 'poppins';
+    margin-left: 2rem;
+  }
+`;
+
+export const SignOutContainer = styled.div`
+  > img {
+    cursor: pointer;
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+`;
+
+
+export const Footer = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 4rem;
+
+  width: 100%;
+  height: 30vh;
+  background: var(--color-background);
+
+  > p {
+    margin-right: 13rem;
+    font-size: 2rem;
+
+    color: var(--color-text-base);
+  }
+`;
+
+
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -54,11 +105,6 @@ export const ButtonsContainer = styled.div`
 
 
   @media(min-width: 1100px) {
-    grid-area: buttons;
-    /*
-      Esse elemento vai ocupar o buttons la do grid-template-areas
-    */
-    justify-content: flex-start;
 
     > a {
       font-size: 2.4rem;
@@ -90,10 +136,10 @@ export const ButtonsContainer = styled.div`
   }
 
   > a.study {
-    background: var(--color-primary-lighter);
+    background: var(--color-primary);
 
     &:hover {
-      background: var(--color-primary-light);
+      background: var(--color-primary-dark);
     }
   }
 
@@ -116,17 +162,15 @@ export const HeroImage = styled.div`
   }
 
   @media(min-width: 1100px) {
-    grid-area: hero;
-    /*
-      Esse elemento vai ocupar o hero la do grid-template-areas
-    */
-    
-    align-self: end;
+
   }
 `;
 
 export const TotalConnections = styled.div`
   font-size: 1.4rem;
+  margin-right: 4rem;
+  text-align: right;
+  color: var(--color-text-complement);
 
   display: flex;
   align-items: center;
@@ -140,28 +184,20 @@ export const TotalConnections = styled.div`
     justify-self: end;
   }
 
-  > img {
-    margin-left: 0.8rem;
+  > span {
+    > img {
+      margin-left: 0.8rem;
+    }
   }
 `;
 
 export const PageLandingContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
   @media(min-width: 1100px) {
     max-width: 1100px;
-
-    display: grid;
-    grid-template-rows: 350px 1fr;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-areas: 
-      "logo hero hero"
-      "buttons buttons total"
-    ;
-    /*
-      logo: vai ocupar o 350px,
-      1fr: vai ocupar a imagen,
-
-      2fr 1fr: buttons buttons,
-      1fr: total
-    */
+    margin: 0 auto;
   }
-`; 
+`;

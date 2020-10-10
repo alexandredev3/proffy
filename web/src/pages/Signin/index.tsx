@@ -1,11 +1,11 @@
-import React, { FormEvent, useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 
 import InputUnform from '../../components/InputUnform';
-import Checkbox from '../../components/Checkbox';
 import Button from '../../components/Button';
 
 import logoImage from '../../assets/images/logo.svg';
@@ -23,40 +23,36 @@ import {
   Title,
 } from './style';
 
-interface CheckboxOptions {
-  id: string;
-  value: string;
-  label: string;
-}
-
 interface SigninData {
   email: string;
   password: string;
-  remember: string[];
 }
 
 function Signin() {
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  
+  const inputRefs = useRef<FormHandles>(null);
+  
   const { signIn } = useAuth();
 
+  const handleRemember = useCallback(() => {
+    setIsCheckboxChecked(!isCheckboxChecked)
+  }, [isCheckboxChecked]);
+
   const handleSubmit = useCallback(async (data: SigninData) => {
-    const { email, password, remember } = data;
+    const { email, password } = data;
 
     try {
       await signIn({
         email,
         password,
-        isLoginRemember: remember[0] ? true : false 
+        isLoginRemember: isCheckboxChecked
       })
 
     } catch(err) {
-      alert("Deu algo errado... porfavor tente novamente");
       console.log(err)
     }
-  }, [])
-
-  const checkboxOptions: CheckboxOptions[] = [
-    { id: "1", value: "remember", label: "Lembrar-me" }
-  ]
+  }, [inputRefs, isCheckboxChecked])
 
 	return (
     <SigninPage>
@@ -75,7 +71,7 @@ function Signin() {
             <InputUnform 
               name="email" 
               type="text" 
-              placeholder="E-mail" 
+              placeholder="E-mail"
             />
             <InputUnform 
               name="password"
@@ -84,10 +80,14 @@ function Signin() {
             />
 
             <CheckboxContainer>
-              <Checkbox 
-                name="remember" 
-                options={checkboxOptions}
-              />
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleRemember}
+                />
+                <span></span>
+                <p>Lembrar-me</p>
+              </label>
               <a href="#">Esqueci minha senha</a>
             </CheckboxContainer>
 

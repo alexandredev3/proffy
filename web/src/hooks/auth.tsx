@@ -5,6 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
+import { isNonNullExpression } from 'typescript';
 
 import { api } from '../services/api';
 
@@ -12,12 +13,9 @@ interface User {
   id: number;
   name: string;
   avatar_url: string;
-  token: string;
 }
 
-interface AuthState {
-  token: string;
-  user: User;
+interface AuthState extends User {
 }
 
 interface SigninCredendials {
@@ -28,9 +26,10 @@ interface SigninCredendials {
 
 interface AuthContextData {
   signed: boolean;
-  userData: AuthState | null;
+  userData: User | null;
   signIn(signinCredendials: SigninCredendials): Promise<void>;
   // a atualização do usuario e feita aqui.
+  signOut(): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -60,7 +59,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       token 
     } = response.data;
 
-    setUserData({ token, user });
+    const { id, name, avatar_url }: User = user;
+
+    setUserData({ id, name, avatar_url });
     
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -73,11 +74,18 @@ export const AuthProvider: React.FC = ({ children }) => {
         JSON.stringify(response.data.token)
       );
     }
-  }, []);
+  }, [userData]);
+
+  const signOut = useCallback(() => {
+    setUserData(null);
+
+    localStorage.removeItem('@ProffyAuth:user');
+    localStorage.removeItem('@ProffyAuth:token');
+  }, [userData]);
 
   return (
     <AuthContext.Provider
-      value={{ signed: !!userData, userData, signIn }}
+      value={{ signed: !!userData, userData, signIn, signOut }}
     >
       {children}
     </AuthContext.Provider>

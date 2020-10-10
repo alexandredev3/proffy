@@ -7,7 +7,7 @@ import { api } from '../../services/api';
 
 import InputUnform from '../../components/InputUnform';
 import Button from '../../components/Button';
-import Modal from '../../components/Modal';
+import Modal, { ModalHandles } from '../../components/Modal';
 
 import logoImage from '../../assets/images/logo.svg';
 import backIcon from '../../assets/images/icons/back.svg';
@@ -30,8 +30,12 @@ interface SignUpFormData {
 }
 
 export default function Signup() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const inputRef = useRef<FormHandles>(null);
+  const modalRef = useRef<ModalHandles>(null)
+
+  const handleOpenModal = useCallback(() => {
+    modalRef.current?.openModal()
+  }, [modalRef]);
 
   const handleSubmit = useCallback(async (
     data: SignUpFormData
@@ -54,7 +58,8 @@ export default function Signup() {
         confirmPassword
       });
 
-      setIsModalVisible(true)
+      handleOpenModal();
+
     } catch(err) {
       alert(`Ocorreu um erro durante a criação de um usuario, tente novamente...`);
       console.log(err)
@@ -65,7 +70,7 @@ export default function Signup() {
   return (
     <SignupPage>
       <Modal
-        isVisible={isModalVisible}
+        ref={modalRef}
         title="Cadastro concluído"
         describe="Agora você faz parte da plataforma da Proffy.
         Tenha uma ótima experiência."

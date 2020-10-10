@@ -1,13 +1,15 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
+import ReactInputMask from 'react-input-mask';
 
 import { 
   PageTeacherForm, 
   Main,
   Fieldset, 
   Footer, 
-  ScheduleItem, 
-  Form
+  ScheduleItem,
+  Form,
+  InputGroup
 } from './style';
 
 import PageHeader from '../../components/PageHeader';
@@ -17,9 +19,14 @@ import Select from '../../components/Select';
 
 import warningIcon from '../../assets/images/icons/warning.svg';
 
+import { useAuth } from '../../hooks/auth';
+
 import { api } from '../../services/api';
+import InputMask from '../../components/InputMask';
 
 function TeacherForm() {
+  const { userData } = useAuth();
+
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -33,6 +40,8 @@ function TeacherForm() {
   const [scheduleItems, setScheduleItems] = useState([
     { week_day: 0, from: '', to: '' },
   ]);
+
+  const [bioCount, setBioCount] = useState(0)
 
   function handleAddNewScheduleItem() {
     setScheduleItems([
@@ -86,36 +95,31 @@ function TeacherForm() {
       <Main>
         <Form onSubmit={handleCreateClass}>
           {/*O fieldset vai ser cada bloco dos inputs*/}
-          <Fieldset>
+          <Fieldset bioCount={bioCount}>
             <legend>Seus dados</legend>
 
-            <Input 
-              name="name" 
-              label="Nome completo" 
-              value={name}
-              onChange={(e) => { setName(e.target.value) }} 
-            />
+            <InputGroup>
+              <img src={userData?.avatar_url} alt="profile avatar"/>
+              <h3>{userData?.name}</h3>
 
-            <Input 
-              name="avatar" 
-              label="Avatar"
-              value={avatar}
-              onChange={(e) => { setAvatar(e.target.value) }}
-            />
-
-            <Input 
-              name="whatsapp"
-              label="Whatsapp" 
-              value={whatsapp}
-              onChange={(e) => { setWhatsapp(e.target.value) }}
-            />
+              <InputMask 
+                name="whatsapp"
+                mask="(99) 9 9999 9999"
+                placeholder="(  ) _ ____ ____"
+              />
+            </InputGroup>
 
             <Textarea 
               name="bio" 
-              label="Biografia" 
+              label="Biografia (Máximo 300 caracteres)" 
               value={bio}
-              onChange={(e) => { setBio(e.target.value) }}
+              maxLength={300}
+              onChange={(e) => { 
+                setBioCount(e.target.value.length)
+                setBio(e.target.value) 
+              }}
             />
+            <span>{bioCount} caracteres</span>
 
           </Fieldset>
 
