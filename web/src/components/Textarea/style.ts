@@ -8,7 +8,11 @@ const device = {
   desktop: `(min-width: ${size.desktop})`
 }
 
-export const TextareaBlock = styled.div`
+interface Props {
+  caracterCount?: number | string;
+}
+
+export const TextareaBlock = styled.div<Props>`
   position: relative;
   margin-top: 2.4rem;
 
@@ -52,5 +56,21 @@ export const TextareaBlock = styled.div`
     resize: vertical;
     padding: 1.2rem 1.6rem;
     font: 1.6rem Archivo;
+
+    position: relative;
+  }
+
+  > span {
+    position: absolute;
+    top: 162px;
+    left: 565px;
+    bottom: 0;
+
+    color: var(--color-text-complement);
+
+    font-size: 1.2rem;
+
+    color: ${(props) => props.caracterCount && props.caracterCount >= 200 && 'orange'};
+    color: ${(props) => props.caracterCount && props.caracterCount >= 250 && '#ff483b'};
   }
 `;

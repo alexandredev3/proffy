@@ -8,10 +8,6 @@ const size = {
   desktop: `(min-width: ${device.desktop})`
 };
 
-interface Props {
-  bioCount?: number;
-}
-
 export const PageTeacherForm = styled.div`
   width: 100vw;
   height: 100vh;
@@ -35,7 +31,7 @@ export const Form = styled.form`
 
 `;
 
-export const Fieldset = styled.fieldset<Props>`
+export const Fieldset = styled.fieldset`
   border: 0;
   padding: 0 2.4rem;
 
@@ -73,15 +69,6 @@ export const Fieldset = styled.fieldset<Props>`
   @media ${size.desktop} {
     padding: 0 6.4rem;
   }
-
-  > span {
-      font-size: 1.2rem;
-      display: inherit;
-      text-align: right;
-
-      color: ${(props) => props.bioCount && props.bioCount >= 200 && 'orange'};
-      color: ${(props) => props.bioCount && props.bioCount >= 250 && '#ff483b'};
-    }
 `;
 
 export const ScheduleItem = styled.div`
@@ -151,20 +138,19 @@ export const InputGroup = styled.div`
   display: flex;
   align-items: center;
 
-  > img {
-    width: 84px;
-    height: 84px;
+  div {
+    > img {
+      width: 84px;
+      height: 84px;
+    }
 
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  > h3 {
-    width: 40%;
-    font-family: 'Archivo';
-    font-size: 2rem;
-    color: var(--color-text-title);
-    margin-left: 2rem;
-    margin-right: 4rem;
+    > span {
+      font-family: 'Archivo';
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-text-title);
+      margin-left: 2rem;
+      margin-right: 4rem;
+    }
   }
 `;

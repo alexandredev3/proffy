@@ -48,24 +48,6 @@ export const Header = styled.header`
   margin: 2.4rem 14rem;
 `;
 
-export const UserContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  > img {
-    border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    object-fit: cover;
-  }
-
-  > span {
-    font-size: 1.4rem;
-    font-family: 'poppins';
-    margin-left: 2rem;
-  }
-`;
-
 export const SignOutContainer = styled.div`
   > img {
     cursor: pointer;

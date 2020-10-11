@@ -6,7 +6,6 @@ import {
   PageLandingContent, 
   Header,
   SignOutContainer,
-  UserContainer,
   LogoContainer, 
   HeroImage, 
   ButtonsContainer,
@@ -17,6 +16,7 @@ import {
 import logoImg from '../../assets/images/logo.svg';
 import landingImg from '../../assets/images/landing.svg';
 import signupImg from '../../assets/images/icons/signup.svg';
+import UserAvatar from '../../components/UserAvatar';
 
 import studyIcon from '../../assets/images/icons/study.svg';
 import giveClassesIcon from '../../assets/images/icons/give-classes.svg';
@@ -42,15 +42,7 @@ function Landing() {
   return (
     <PageLanding>
       <Header>
-        <UserContainer>
-          {
-            userData?.avatar_url
-              ? <img src={userData?.avatar_url} />
-              : <p>Sem foto</p>
-          }
-
-          <span>{userData?.name}</span>
-        </UserContainer>
+        <UserAvatar />
 
         <SignOutContainer>
           <img

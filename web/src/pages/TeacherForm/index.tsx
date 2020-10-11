@@ -1,6 +1,5 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
-import ReactInputMask from 'react-input-mask';
 
 import { 
   PageTeacherForm, 
@@ -16,6 +15,7 @@ import PageHeader from '../../components/PageHeader';
 import Input from '../../components/Input';
 import Textarea from '../../components/Textarea';
 import Select from '../../components/Select';
+import UserAvatar from '../../components/UserAvatar';
 
 import warningIcon from '../../assets/images/icons/warning.svg';
 
@@ -25,8 +25,6 @@ import { api } from '../../services/api';
 import InputMask from '../../components/InputMask';
 
 function TeacherForm() {
-  const { userData } = useAuth();
-
   const history = useHistory();
 
   const [name, setName] = useState('');
@@ -95,12 +93,11 @@ function TeacherForm() {
       <Main>
         <Form onSubmit={handleCreateClass}>
           {/*O fieldset vai ser cada bloco dos inputs*/}
-          <Fieldset bioCount={bioCount}>
+          <Fieldset>
             <legend>Seus dados</legend>
 
             <InputGroup>
-              <img src={userData?.avatar_url} alt="profile avatar"/>
-              <h3>{userData?.name}</h3>
+              <UserAvatar />
 
               <InputMask 
                 name="whatsapp"
@@ -114,12 +111,12 @@ function TeacherForm() {
               label="Biografia (Máximo 300 caracteres)" 
               value={bio}
               maxLength={300}
+              caracterCount={bioCount}
               onChange={(e) => { 
                 setBioCount(e.target.value.length)
                 setBio(e.target.value) 
               }}
             />
-            <span>{bioCount} caracteres</span>
 
           </Fieldset>
 
